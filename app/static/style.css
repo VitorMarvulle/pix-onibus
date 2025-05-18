@@ -4,13 +4,14 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background: linear-gradient(48deg, rgba(137, 218, 250, 1) 0%, rgba(194, 255, 219, 1) 50%, rgba(255, 232, 232, 1) 100%);
 }
 
 html, body {
     height: 100vh;
     overflow: hidden; /* Impede scroll */
     font-family: "Poppins", sans-serif;
+    background: linear-gradient(48deg, rgba(137, 218, 250, 1) 0%, rgba(194, 255, 219, 1) 50%, rgba(255, 232, 232, 1) 100%);
+
 }
 
 /* Container principal */
@@ -36,7 +37,7 @@ html, body {
         position: absolute;
         top: 20px;
         left: 20px;
-        background: red;
+        background: none;
     }
 
     .left-side h1 {

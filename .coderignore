@@ -1,0 +1,89 @@
+# .coderignore
+# You may customize this file using the .gitignore syntax.
+
+# Python
+__pycache__/
+.venv
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+*.egg
+*.egg-info/
+dist/
+build/
+*.so
+poetry.lock
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+*.iml
+*.ipr
+*.iws
+target/
+out/
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+dist/
+build/
+
+# React.js
+node_modules/
+npm-debug.log
+yarn-error.log
+build/
+.DS_Store
+
+# Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+
+vendor/
+
+# Image files
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.tiff
+*.ico
+*.svg
+
+# Other binary and large files
+*.pdf
+*.doc
+*.docx
+*.ppt
+*.pptx
+*.xls
+*.xlsx
+*.zip
+*.tar
+*.gz
+*.rar
+*.7z
+*.mp3
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.flv
+*.wav
+*.ogg
+*.bin
+*.dat
+*.db
+*.sqlite
+*.mdb

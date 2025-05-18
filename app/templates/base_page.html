@@ -1,0 +1,36 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style2.css' %}">
+    <title>Pix Onibus</title>
+</head>
+<body>
+    <div class="container">
+
+        <!-- Top-left button -->
+        <div class="top-left">
+            <a href="{{ previous_url }}" class="button">Voltar</a>
+        </div>
+
+        <!-- Top-right text -->
+        <div class="logo-home">
+            <h3>OniPix</h3>
+        </div>
+
+        <!-- Center card -->
+        <div class="card">
+            {% block content %}{% endblock %}
+        </div>
+
+        <!-- Bottom button -->
+        <div class="bottom-center">
+            <a href="{{ next_url }}" class="button">Próximo</a>
+        </div>
+
+    </div>
+</body>
+</html>
