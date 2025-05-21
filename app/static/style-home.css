@@ -50,6 +50,7 @@ html, body {
         padding: 15px 200px;
         font-size: 1rem;
         font-weight: 500;
+        font-family: "Poppins", sans-serif;
         cursor: pointer;
         border: none;
         color: #1a1a1a;
@@ -113,8 +114,8 @@ html, body {
         }
 
         .left-side button {
-            font-size: 0.95rem;
-            padding: 10px 22px;
+            font-size: 1.7rem;
+            padding: 20px 50px;
         }
     }
 

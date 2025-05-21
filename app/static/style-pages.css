@@ -4,13 +4,31 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    
+}
+
+:root {
+    /* Define variables for consistent spacing and sizing */
+    --spacing-xs: 5px;
+    --spacing-sm: 10px;
+    --spacing-md: 20px;
+    --spacing-lg: 30px;
+    --spacing-xl: 40px;
+    
+    /* Define variables for font sizes */
+    --font-size-sm: 0.875rem;
+    --font-size-md: 1rem;
+    --font-size-lg: 1.25rem;
+    --font-size-xl: 1.5rem;
+    --font-size-xxl: 1.8rem;
 }
 
 html, body {
-    height: 100vh;
+    height: 100%;
+    width: 100%;
     font-family: "Poppins", sans-serif;
     background: linear-gradient(48deg, rgba(137, 218, 250, 1) 0%, rgba(194, 255, 219, 1) 50%, rgba(255, 232, 232, 1) 100%);
-
+    font-size: 16px; /* Base font size */
 }
 
 .container {
@@ -18,21 +36,25 @@ html, body {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    height: 100vh;
-    padding: 20px;
+    min-height: 100vh;
+    width: 100%;
+    padding: var(--spacing-md);
     text-align: center;
+    position: relative;
 }
 
 .top-left {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: var(--spacing-md);
+    left: var(--spacing-md);
+    z-index: 10;
 }
 
 .logo-home {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    z-index: 10;
 }
 
 .card {
@@ -43,25 +65,30 @@ html, body {
     align-items: center;
     width: 80%;
     max-width: 500px;
-    padding: 20px;
+    padding: var(--spacing-md);
     background: white;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: var(--spacing-lg) 0;
 }
 
 .texto-card {
-    margin-top: -30%;
+    position: relative;
+    width: 100%;
 }
 
 .bottom-center {
-    margin-bottom: 20px;
-    margin-top: 50px;
+    margin-bottom: var(--spacing-md);
+    margin-top: var(--spacing-xl);
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .button-next {
     display: inline-block;
-    padding: 10px 20px;
-    font-size: 1rem;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-md);
     font-weight: 500;
     color: #1a1a1a;
     text-decoration: none;
@@ -70,7 +97,6 @@ html, body {
     background: white;
     transition: background 0.3s ease;
     cursor: pointer;
-    top: 10vh;
 }
 
 .button-back {
@@ -88,8 +114,8 @@ html, body {
 
 .button {
     display: inline-block;
-    padding: 10px 20px;
-    font-size: 1rem;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-md);
     font-weight: 500;
     color: #1a1a1a;
     text-decoration: none;
@@ -105,31 +131,31 @@ html, body {
 }
 
 /* componentes da pagina 'quantidade' */
-
 .card-menor {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 400px;
+    width: 100%;
+    max-width: 400px;
     background: white;
     border-radius: 25px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 40px;
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
     position: relative;
-    top: 10vh;
 }
 
 .card-image {
-    width: 80%;
-    margin: 20px 0;
+    width: 60%;
+    max-width: 100px;
+    margin: var(--spacing-md) 0;
 }
 
 .quantity-selector {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 15px 0;
+    margin: var(--spacing-sm) 0;
 }
 
 .quantity-btn {
@@ -139,6 +165,7 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: var(--spacing-xs);
 }
 
 .quantity-btn img {
@@ -147,47 +174,206 @@ html, body {
 }
 
 .quantity-value {
-    font-size: 1.8rem;
+    font-size: var(--font-size-xxl);
     font-weight: 600;
-    margin: 0 20px;
+    margin: 0 var(--spacing-md);
 }
 
-/* Responsividade para telas até 768px (celulares e tablets pequenos) */
-    @media (max-width: 768px) {
-
-        .container {
-            flex-direction: column-reverse; /* Inverte a ordem: imagem em cima */
-        }
-
-        .right-side, .left-side {
-            width: 100%;
-            height: 50vh; /* Ocupam 50% cada */
-            flex: none;
-        }
-
-        .right-side {
-            order: -1; /* Garante que a imagem venha antes visualmente */
-        }
-
-        .right-side .imagem img {
-            width: 170%;
-            height: 100%;
-            object-fit: cover;
-            object-position: -100px center;
-        }
-
-        .left-side {
-            padding: 20px;
-            justify-content: center;
-        }
-
-        .left-side h1 {
-            font-size: 1.8rem;
-            margin-bottom: 16px;
-        }
-
-        .left-side button {
-            font-size: 0.95rem;
-            padding: 10px 22px;
-        }
+/* Extra Large Screens (1440px and up) */
+@media (min-width: 1440px) {
+    :root {
+        font-size: 18px; /* Slightly larger base font size for big screens */
     }
+    
+    .card {
+        max-width: 600px;
+    }
+    
+    .card-menor {
+        max-width: 450px;
+    }
+}
+
+/* Large Screens (1024px to 1439px) */
+@media (min-width: 1024px) and (max-width: 1439px) {
+    .card {
+        max-width: 550px;
+    }
+}
+
+/* Medium Screens (tablets, 768px to 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .card {
+        width: 90%;
+    }
+    
+    .container {
+        padding: var(--spacing-sm);
+    }
+}
+
+/* Small Screens (mobile landscape, 481px to 767px) */
+@media (min-width: 481px) and (max-width: 767px) {
+    :root {
+        font-size: 15px; /* Slightly smaller base font size */
+    }
+    
+    .card {
+        width: 95%;
+    }
+    
+    .top-left, .logo-home {
+        position: relative;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .top-left {
+        align-self: flex-start;
+    }
+    
+    .logo-home {
+        align-self: flex-end;
+    }
+    
+    .container {
+        padding: var(--spacing-sm);
+        justify-content: center;
+    }
+    
+    .card-image {
+        width: 50%;
+    }
+    
+    .button-back {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+/* Extra Small Screens (mobile portrait, up to 480px) */
+@media (max-width: 480px) {
+    :root {
+        font-size: 14px; /* Smaller base font size for tiny screens */
+        --spacing-md: 15px; /* Adjust spacing for smaller screens */
+    }
+    
+    .container {
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+    
+    .card {
+        width: 100%;
+        padding: var(--spacing-sm);
+    }
+    
+    .card-menor {
+        width: 95%;
+        padding: var(--spacing-sm);
+    }
+    
+    .top-left, .logo-home {
+        position: relative;
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .top-left {
+        align-self: flex-start;
+    }
+    
+    .logo-home {
+        align-self: flex-end;
+    }
+    
+    .button-next, .button {
+        padding: 8px 16px;
+        font-size: var(--font-size-sm);
+    }
+    
+    .button-back {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .quantity-btn img {
+        width: 24px;
+    }
+    
+    .quantity-value {
+        margin: 0 var(--spacing-sm);
+    }
+    
+    .card-image {
+        width: 70%;
+    }
+}
+
+/* Fix for height on mobile browsers accounting for address bar */
+@media (max-height: 600px) {
+    .container {
+        min-height: 100vh; /* Use min-height instead of height */
+        height: auto;
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+    
+    .card {
+        margin: var(--spacing-sm) 0;
+    }
+}
+
+/* Orientation-specific adjustments */
+@media (orientation: landscape) and (max-height: 500px) {
+    .container {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .card {
+        margin: var(--spacing-xs) var(--spacing-sm);
+        min-height: auto;
+    }
+    
+    .top-left, .logo-home {
+        position: absolute;
+    }
+}
+
+/* Keeping the existing inverted layout for mobile */
+@media (max-width: 768px) {
+    .container.with-image {
+        flex-direction: column-reverse; /* Only apply for containers with images */
+    }
+
+    .right-side, .left-side {
+        width: 100%;
+        height: auto;
+        min-height: 40vh;
+    }
+
+    .right-side {
+        order: -1;
+    }
+
+    .right-side .imagem img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .left-side {
+        padding: var(--spacing-md);
+        justify-content: center;
+    }
+
+    .left-side h1 {
+        font-size: var(--font-size-xl);
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .left-side button {
+        font-size: var(--font-size-md);
+        padding: var(--spacing-xs) var(--spacing-md);
+    }
+}
