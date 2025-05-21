@@ -1,6 +1,72 @@
 {% extends 'base_page.html' %}
 
 {% block content %}
-<h1>Preencha o formulário</h1>
-<p>Insira seus dados para continuar.</p>
+<div class="texto-card">
+    <h1>Preencha o formulário</h1>
+    <p>Insira seus dados para continuar.</p>
+</div>
+
+<div class="card-menor">
+
+    <div class="login-options">
+        <input type="text" class="login-input" id="email" placeholder="email">
+        
+        <div class="separator">
+            <span>OU</span>
+        </div>
+        
+        <input type="text" class="login-input" id="celular" placeholder="celular">
+    </div>
+</div>
+
+{% block extra_css %}
+<style>
+    .login-options {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding: 10px 15px;
+        margin: 10px 0;
+    }
+    
+    .login-input {
+        width: 100%;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 50px;
+        background-color: #eaeaea;
+        font-family: inherit;
+        font-size: 16px;
+        color: #333;
+        margin: 5px 0;
+        text-align: center;
+    }
+    
+    .login-input::placeholder {
+        color: #666;
+    }
+    
+    .login-input:focus {
+        outline: none;
+        background-color: #e0e0e0;
+    }
+    
+    .separator {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        margin: 15px 0;
+        justify-content: center;
+    }
+    
+    .separator span {
+        font-weight: bold;
+        font-size: 18px;
+        color: #333;
+        margin: 0 10px;
+    }
+</style>
+{% endblock %}
+
 {% endblock %}
