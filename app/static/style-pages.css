@@ -1,0 +1,193 @@
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100vh;
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(48deg, rgba(137, 218, 250, 1) 0%, rgba(194, 255, 219, 1) 50%, rgba(255, 232, 232, 1) 100%);
+
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+    text-align: center;
+}
+
+.top-left {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.logo-home {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    max-width: 500px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.texto-card {
+    margin-top: -30%;
+}
+
+.bottom-center {
+    margin-bottom: 20px;
+    margin-top: 50px;
+}
+
+.button-next {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #1a1a1a;
+    text-decoration: none;
+    border: none;
+    border-radius: 40px;
+    background: white;
+    transition: background 0.3s ease;
+    cursor: pointer;
+    top: 10vh;
+}
+
+.button-back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+    cursor: pointer;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #1a1a1a;
+    text-decoration: none;
+    border: none;
+    border-radius: 40px;
+    background: white;
+    transition: background 0.3s ease;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #77e2fd;
+}
+
+/* componentes da pagina 'quantidade' */
+
+.card-menor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
+    background: white;
+    border-radius: 25px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 40px;
+    position: relative;
+    top: 10vh;
+}
+
+.card-image {
+    width: 80%;
+    margin: 20px 0;
+}
+
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px 0;
+}
+
+.quantity-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quantity-btn img {
+    width: 30px;
+    height: auto;
+}
+
+.quantity-value {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0 20px;
+}
+
+/* Responsividade para telas até 768px (celulares e tablets pequenos) */
+    @media (max-width: 768px) {
+
+        .container {
+            flex-direction: column-reverse; /* Inverte a ordem: imagem em cima */
+        }
+
+        .right-side, .left-side {
+            width: 100%;
+            height: 50vh; /* Ocupam 50% cada */
+            flex: none;
+        }
+
+        .right-side {
+            order: -1; /* Garante que a imagem venha antes visualmente */
+        }
+
+        .right-side .imagem img {
+            width: 170%;
+            height: 100%;
+            object-fit: cover;
+            object-position: -100px center;
+        }
+
+        .left-side {
+            padding: 20px;
+            justify-content: center;
+        }
+
+        .left-side h1 {
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+        }
+
+        .left-side button {
+            font-size: 0.95rem;
+            padding: 10px 22px;
+        }
+    }

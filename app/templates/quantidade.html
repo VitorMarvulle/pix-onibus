@@ -1,6 +1,79 @@
 {% extends 'base_page.html' %}
+{% load static %}
 
 {% block content %}
-<h1>Selecione a quantidade</h1>
-<p>Escolha o número de passagens que deseja comprar.</p>
+<div class="texto-card">
+    <h1>Selecione a quantidade</h1>
+    <p>Escolha o número de passagens que deseja comprar.</p>
+    <p>Máx. 04</p>
+</div>
+
+
+<div class="card-menor">
+    <img src="{% static 'assets/ticket.png' %}" alt="Tickets" class="card-image">
+    <div class="quantity-selector">
+                <button class="quantity-btn decrease-btn">
+                    <img src="{% static 'assets/arrow.png' %}" alt="Increase" style="width: 50%; height: auto; transform: scaleX(-1);">            </button>
+                <span class="quantity-value">1</span>
+                <button class="quantity-btn increase-btn">
+                    <img src="{% static 'assets/arrow.png' %}" alt="Increase" style="width: 50%; height: auto;">
+                </button>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const decreaseBtn = document.querySelector('.decrease-btn');
+        const increaseBtn = document.querySelector('.increase-btn');
+        const quantityValue = document.querySelector('.quantity-value');
+        const increaseBtnImage = increaseBtn.querySelector('img');
+        
+        let quantity = 1;
+        const MAX_QUANTITY = 4;
+        const MIN_QUANTITY = 1;
+        
+        // Initial state check
+        updateButtonStates();
+        
+        decreaseBtn.addEventListener('click', function() {
+            if (quantity > MIN_QUANTITY) {
+                quantity--;
+                quantityValue.textContent = quantity;
+                updateButtonStates();
+            }
+        });
+        
+        increaseBtn.addEventListener('click', function() {
+            if (quantity < MAX_QUANTITY) {
+                quantity++;
+                quantityValue.textContent = quantity;
+                updateButtonStates();
+            }
+        });
+        
+        function updateButtonStates() {
+            // Handle increase button state
+            if (quantity >= MAX_QUANTITY) {
+                increaseBtn.style.opacity = "0.3";
+                increaseBtn.style.pointerEvents = "none";
+            } else {
+                increaseBtn.style.opacity = "1";
+                increaseBtn.style.pointerEvents = "auto";
+            }
+            
+            // Handle decrease button state
+            if (quantity <= MIN_QUANTITY) {
+                decreaseBtn.style.opacity = "0.3";
+                decreaseBtn.style.pointerEvents = "none";
+            } else {
+                decreaseBtn.style.opacity = "1";
+                decreaseBtn.style.pointerEvents = "auto";
+            }
+        }
+    });
+</script>
 {% endblock %}
+
+{% endblock %}
+

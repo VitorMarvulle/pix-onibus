@@ -1,7 +1,15 @@
-{% extends 'base.html' %}
 {% load static %}
 
-{% block content %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style-home.css' %}">
+    <title>Pix Onibus</title>
+</head>
+<body {% block bg %}{% endblock %}>
+
 <div class="container">
 
     <!-- Left side -->
@@ -26,4 +34,6 @@
     </div>
 
 </div>
-{% endblock %}
+
+</body>
+</html>
