@@ -13,7 +13,7 @@
 
         <!-- Top-left button -->
         <div class="top-left">
-            <a href="{{ previous_url }}" class="button-back">Voltar</a>
+            <a href="{{ previous_url }}" class="button-back" style="font-weight: 200; font-size: 70px; text-decoration: none; color: rgb(235, 210, 130);"><</a>
         </div>
 
         <!-- Top-right text -->
@@ -28,7 +28,7 @@
 
         <!-- Bottom button -->
         <div class="bottom-center">
-            <a href="{{ next_url }}" class="button-next">Próximo</a>
+            <a href="{{ next_url }}" class="button-next">{% block content-btn %} Próximo {% endblock %}</a>
         </div>
 
     </div>

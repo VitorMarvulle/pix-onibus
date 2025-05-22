@@ -3,6 +3,7 @@ from django.shortcuts import render
 def home(request):
     return render(request, 'home.html', {
         'next_url': '/quantidade/',
+        'empresas': '/empresa/login',
     })
 
 def quantidade(request):
