@@ -1,0 +1,181 @@
+   
+   @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+    body, html {
+        margin: 0;
+        padding: 0;
+        font-family: "Poppins", sans-serif;
+        background-color: #f4f7f6; /* Um cinza bem claro para o fundo da página */
+        color: #333;
+        height: 100%;
+    }
+
+    .dashboard-container {
+        padding: 25px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Header */
+    .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .greeting {
+        font-size: 26px;
+        font-weight: 600;
+        color: #2c3e50;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        border-radius: 20px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+        border: none;
+    }
+
+    .btn-logout {
+        background-color: #4FD1C5; /* Verde-azulado do botão SAIR */
+        color: white;
+    }
+
+    .btn-logout:hover {
+        background-color: #3dbbab;
+    }
+
+    /* Ações */
+    .dashboard-actions {
+        display: flex;
+        gap: 20px; /* Espaçamento entre os botões de ação */
+        margin-bottom: 25px;
+        align-items: center;
+    }
+
+    .btn-action {
+        color: #34495e;
+        font-weight: 600;
+        font-size: 13px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        padding: 8px 0; /* Apenas padding vertical, já que não tem fundo */
+        text-transform: uppercase;
+    }
+
+    .btn-action .icon {
+        display: inline-flex; /* Para alinhar o ícone e o texto */
+        justify-content: center;
+        align-items: center;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background-color: #4FD1C5; /* Cor do ícone */
+        color: white;
+        font-size: 16px;
+        margin-right: 8px;
+        font-weight: bold;
+    }
+        .btn-action .icon-list { /* Ícone de lista diferente */
+        font-size: 14px; /* Ajuste para o ícone de lista */
+    }
+
+
+    .btn-action:hover {
+        color: #2980b9;
+    }
+
+    /* Main Content - Tabela */
+    .dashboard-main {
+        /* Não precisa de fundo aqui se a tabela wrapper tiver */
+    }
+
+    .tab-title {
+        display: inline-block;
+        background-color: #e9ecef; /* Cinza claro para a aba "DASHBOARD" */
+        padding: 10px 25px;
+        font-weight: 600;
+        font-size: 14px;
+        color: #495057;
+        border-radius: 8px 8px 0 0; /* Cantos arredondados apenas no topo */
+        margin-bottom: -1px; /* Para sobrepor a borda da tabela */
+        position: relative;
+        z-index: 1;
+    }
+
+    .table-wrapper {
+        background-color: #fdfdfd; /* Fundo da área da tabela */
+        border-radius: 12px; /* Cantos arredondados da área da tabela */
+        padding: 0; /* Padding será nos headers/células */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        overflow-x: auto; /* Para rolagem horizontal em telas menores */
+    }
+
+    table {
+        width: 100%;
+        border-collapse: separate; /* Necessário para border-spacing e para que os th tenham fundo individual */
+        border-spacing: 0; /* Remove o espaço padrão */
+        text-align: left;
+    }
+
+    /* Estilo para o cabeçalho da tabela para se parecer com a imagem */
+    thead {
+        background-color: #e9ecef; /* Fundo das células de cabeçalho */
+    }
+
+    th {
+        padding: 18px 20px;
+        font-weight: 600;
+        font-size: 13px;
+        color: #555;
+        text-transform: uppercase;
+        background-color: #f0f3f5; /* Cinza claro para os cabeçalhos */
+        border-bottom: 2px solid #dee2e6; /* Linha abaixo dos cabeçalhos */
+    }
+
+    /* Aplica bordas arredondadas apenas nos cantos externos do cabeçalho */
+    thead tr th:first-child {
+        border-top-left-radius: 8px;
+    }
+    thead tr th:last-child {
+        border-top-right-radius: 8px;
+    }
+
+
+    td {
+        padding: 15px 20px;
+        font-size: 14px;
+        color: #333;
+        border-bottom: 1px solid #f0f0f0; /* Linha sutil entre as linhas */
+    }
+
+    /* Adiciona as linhas verticais como na imagem */
+    th:not(:last-child),
+    td:not(:last-child) {
+        border-right: 1px solid #e7eaec; /* Linha vertical entre as células */
+    }
+
+
+    tbody tr:last-child td {
+        border-bottom: none; /* Remove a borda da última linha */
+    }
+
+    /* Arredonda os cantos inferiores da última linha da tabela */
+    tbody tr:last-child td:first-child {
+        border-bottom-left-radius: 8px;
+    }
+    tbody tr:last-child td:last-child {
+        border-bottom-right-radius: 8px;
+    }
+
+    tbody tr:hover {
+        background-color: #f8f9fa; /* Efeito hover sutil nas linhas */
+    }

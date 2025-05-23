@@ -1,66 +1,69 @@
-{% extends 'base_page.html' %}
+{% load static %}
 
-{% block content %}
-<div class="texto-card">
-    <h1>Preencha o formulário</h1>
-    <p>Insira seus dados para continuar.</p>
-</div>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style-dashboard.css' %}">
+    <title>Dashboard Empresa</title>
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <h1 class="greeting">Bem-vindo, @empresa!</h1>
+            <a href="{{ previous_url }}" class="btn btn-logout">SAIR</a> </header>
 
-<div class="card-menor">
+        <nav class="dashboard-actions">
+            <a href="{{ add_motorista }}" class="btn btn-action"> <span class="icon">+</span>
+                Cadastrar Motorista
+            </a>
+            <a href="{{ add_linha }}" class="btn btn-action"> <span class="icon">+</span>
+                Cadastrar Linha de Onibus
+            </a>
+            <a href="{{ lista_motorista }}" class="btn btn-action"> <span class="icon">👤</span> Lista de Usuários
+            </a>
+        </nav>
 
-    <div class="login-options">      
-        <input type="text" class="login-input" id="celular" placeholder="celular">
+        <main class="dashboard-main">
+            <div class="tab-title">DASHBOARD</div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Linha</th>
+                            <th>Código</th>
+                            <th>Data</th>
+                            <th>Hora</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>João da Costa e Silva</td>
+                            <td>17</td>
+                            <td>0123</td>
+                            <td>01/01/2025</td>
+                            <td>08:52:42</td>
+                        </tr>
+                        <tr>
+                            <td>João da Costa e Silva</td>
+                            <td>17</td>
+                            <td>9234</td>
+                            <td>01/01/2025</td>
+                            <td>10:45:12</td>
+                        </tr>
+                        <tr>
+                            <td>Ana Maria Braga</td>
+                            <td>33</td>
+                            <td>6502</td>
+                            <td>02/01/2025</td>
+                            <td>21:43:08</td>
+                        </tr>
+                        </tbody>
+                </table>
+            </div>
+        </main>
     </div>
-</div>
-
-{% block extra_css %}
-<style>
-    .login-options {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        padding: 10px 15px;
-        margin: 10px 0;
-    }
-    
-    .login-input {
-        width: 100%;
-        padding: 12px 20px;
-        border: none;
-        border-radius: 50px;
-        background-color: #eaeaea;
-        font-family: inherit;
-        font-size: 16px;
-        color: #333;
-        margin: 5px 0;
-        text-align: center;
-    }
-    
-    .login-input::placeholder {
-        color: #666;
-    }
-    
-    .login-input:focus {
-        outline: none;
-        background-color: #e0e0e0;
-    }
-    
-    .separator {
-        display: flex;
-        align-items: center;
-        width: 100%;
-        margin: 15px 0;
-        justify-content: center;
-    }
-    
-    .separator span {
-        font-weight: bold;
-        font-size: 18px;
-        color: #333;
-        margin: 0 10px;
-    }
-</style>
-{% endblock %}
-
-{% endblock %}
+</body>
+</html>

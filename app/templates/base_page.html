@@ -25,12 +25,12 @@
         <div class="card">
             {% block content %}{% endblock %}
         </div>
-
+        {% block middle-btn %}
         <!-- Bottom button -->
         <div class="bottom-center">
             <a href="{{ next_url }}" class="button-next">{% block content-btn %} Próximo {% endblock %}</a>
         </div>
-
+        {% endblock %}
     </div>
 </body>
 </html>

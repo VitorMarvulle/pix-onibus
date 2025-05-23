@@ -8,26 +8,30 @@ def login(request):
 
 def dashboard(request):
     return render(request, 'dashboard.html', {
-        'previous_url': '/login/',
-        'next_url': '/add_linha/',
+        'previous_url': '/',
+        'add_motorista': '/empresa/add_motorista/',
+        'add_linha': '/empresa/add_linha/',
+        'lista_motorista': '/empresa/lista_motorista/',
     })
 
 def add_linha(request):
     return render(request, 'add_linha.html', {
-        'previous_url': '/dashboard/',
+        'previous_url': '/empresa/dashboard/',
         'next_url': '/add_motorista/',
     })
 
 def add_motorista(request):
     return render(request, 'add_motorista.html', {
-        'previous_url': '/add_linha/',
+        'previous_url': '/empresa/dashboard/',
         'next_url': '/lista_motorista/',
     })
 
 def lista_motorista(request):
     return render(request, 'lista_motorista.html', {
-        'previous_url': '/home_motorista/',
-        'next_url': '/lista_motorista/',
+        'previous_url': '/',
+        'add_motorista': '/empresa/add_motorista/',
+        'add_linha': '/empresa/add_linha/',
+        'dashboard': '/empresa/dashboard/',
     })
 
 def home_motorista(request):
