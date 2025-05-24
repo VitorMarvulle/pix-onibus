@@ -34,8 +34,16 @@ def lista_motorista(request):
         'dashboard': '/empresa/dashboard/',
     })
 
+
+    
+def linha_motorista(request):
+    return render(request, 'linha_motorista.html', {
+        'previous_url': '/',
+        'next_url': '/empresa/home_motorista/',
+    })
+    
 def home_motorista(request):
     return render(request, 'home_motorista.html', {
-        'previous_url': '/lista_motorista/',
+        'previous_url': 'empresa/linha_motorista/',
         'next_url': '/login/',
     })

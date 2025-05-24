@@ -1,0 +1,133 @@
+{% extends 'base_page.html' %}
+
+{% block content %}
+<div class="texto-card" id="textBemVindo" style="text-align: center; margin-bottom: 30px;"> 
+    <h1>Bem-vindo, @motorista!</h1>
+</div>
+<h3>Você está operando na linha:</h3>
+<h4 style="font-size: 30px;">13</h4>
+
+<!-- Dropdown list -->
+<div class="texto-card-middle" style="text-align: center; margin-bottom: 30px;"> 
+    <h1>Escaneie o QRCode</h1>
+</div>
+
+<button class="action-button" id="cameraButton">ABRIR CÂMERA</button>
+
+<!-- Hidden video element to display camera stream -->
+<div id="cameraContainer" style="display: none; position: relative; margin: 20px auto; max-width: 100%;">
+  <video id="cameraFeed" autoplay style="width: 100%; border-radius: 8px;"></video>
+  <!-- <button id="captureButton" style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); background-color: white; border-radius: 50%; width: 60px; height: 60px; border: 2px solid #4FBFA5; display: none;">
+    <div style="width: 40px; height: 40px; background-color: #4FBFA5; border-radius: 50%; margin: 8px auto;"></div>
+  </button> -->
+</div>
+
+{% block extra_js %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const cameraButton = document.getElementById('cameraButton');
+    const cameraContainer = document.getElementById('cameraContainer');
+    const cameraFeed = document.getElementById('cameraFeed');
+    // const captureButton = document.getElementById('captureButton');
+    const textBemVindo = document.getElementById('textBemVindo');
+    
+    let stream = null;
+    
+    cameraButton.addEventListener('click', async function() {
+      try {
+        // Request access to the user's camera
+        stream = await navigator.mediaDevices.getUserMedia({ 
+          video: { facingMode: 'environment' }, // Use back camera if available
+          audio: false 
+        });
+        
+        // Display the camera feed
+        cameraFeed.srcObject = stream;
+        cameraContainer.style.display = 'block';
+        // captureButton.style.display = 'block';
+        cameraButton.style.display = 'none';
+        textBemVindo.style.display = 'none';
+        console.log('Text content hidden:', textBemVindo.textContent);
+        console.log('Camera opened successfully');
+      } catch (error) {
+        console.error('Error accessing camera:', error);
+        alert('Não foi possível acessar a câmera. Por favor, verifique as permissões do navegador.');
+      }
+    });
+    
+    // // Optional: Add functionality to capture a photo
+    // captureButton.addEventListener('click', function() {
+    //   // Create a canvas element to capture the current frame
+    //   const canvas = document.createElement('canvas');
+    //   canvas.width = cameraFeed.videoWidth;
+    //   canvas.height = cameraFeed.videoHeight;
+      
+    //   // Draw the current video frame to the canvas
+    //   const context = canvas.getContext('2d');
+    //   context.drawImage(cameraFeed, 0, 0, canvas.width, canvas.height);
+      
+    //   // Convert the canvas to a data URL
+    //   const imageDataUrl = canvas.toDataURL('image/png');
+      
+    //   // Here you can:
+    //   // 1. Display the captured image
+    //   // 2. Send it to your server
+    //   // 3. Process it locally
+    //   console.log('Image captured:', imageDataUrl.substring(0, 50) + '...');
+      
+    //   // Example: Create a hidden input to store the image data for form submission
+    //   const imageInput = document.createElement('input');
+    //   imageInput.type = 'hidden';
+    //   imageInput.name = 'capturedImage';
+    //   imageInput.value = imageDataUrl;
+    //   document.body.appendChild(imageInput);
+      
+    //   // Stop the camera after capturing if desired
+    //   if (stream) {
+    //     stream.getTracks().forEach(track => track.stop());
+    //     cameraContainer.style.display = 'none';
+    //     cameraButton.style.display = 'block';
+    //   }
+    // });
+  });
+</script>
+{% endblock %}
+
+
+<style>
+        .texto-card h1 {
+        font-size: 50px;          /* Tamanho do título "Login" */
+        color: #0e0e0e;
+        margin-top: -40%;
+        font-weight: 600;
+    }
+
+        .texto-card-middle h1 {
+        position: relative;
+        margin-top: 80px;
+        font-size: 30px;          /* Tamanho do título "Login" */
+        color: #0e0e0e;
+        font-weight: 600;
+    }
+
+.action-button {
+        display: block;
+        width: 280px;
+        max-width: 90%;
+        margin: 20px auto;
+        padding: 12px;
+        border: none;
+        border-radius: 25px;
+        background-color: #4FBFA5;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+</style>
+{% endblock %}
+
+{% block middle-btn %} {% endblock %}
