@@ -1,6 +1,21 @@
 {% extends 'base_page.html' %}
 
 {% block content %}
-<h1>Pagamento</h1>
-<p>Escolha o método de pagamento para finalizar sua compra.</p>
+<h1>Efetue o pagamento:</h1>
+
+<div class="container-pagamento">
+    <h3>PASSAGEM MUNICIPAL</h3>
+    <div id="qrcode">
+       {% if qrcode_base64 %}
+            <img src="data:image/png;base64,{{ qrcode_base64 }}"  
+            style="width: 200px; height: 200px; justify-content: center; display: flex; align-items: center; margin: 0 auto;"
+            alt="PIX QRCode">
+        {% endif %}
+    </div>
+
+    <p>R$ {{ passagem.valor }} 5,25</p>
+    <h2>{{ passagem.qtd }} 1 Unidade</h2>
+
+</div>
+
 {% endblock %}
