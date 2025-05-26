@@ -1,0 +1,69 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style-dashboard.css' %}">
+    <title>Dashboard Empresa</title>
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <h1 class="greeting">Bem-vindo, @empresa!</h1>
+            <a href="{{ previous_url }}" class="btn btn-logout">SAIR</a> </header>
+
+        <nav class="dashboard-actions">
+            <a href="{{ add_motorista }}" class="btn btn-action"> <span class="icon">+</span>
+                Cadastrar Motorista
+            </a>
+            <a href="{{ add_linha }}" class="btn btn-action"> <span class="icon">+</span>
+                Cadastrar Linha de Onibus
+            </a>
+            <a href="{{ lista_motorista }}" class="btn btn-action"> <span class="icon">👤</span> Lista de Usuários
+            </a>
+        </nav>
+
+        <main class="dashboard-main">
+            <div class="tab-title">DASHBOARD</div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Linha</th>
+                            <th>Código</th>
+                            <th>Data</th>
+                            <th>Hora</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>João da Costa e Silva</td>
+                            <td>17</td>
+                            <td>0123</td>
+                            <td>01/01/2025</td>
+                            <td>08:52:42</td>
+                        </tr>
+                        <tr>
+                            <td>João da Costa e Silva</td>
+                            <td>17</td>
+                            <td>9234</td>
+                            <td>01/01/2025</td>
+                            <td>10:45:12</td>
+                        </tr>
+                        <tr>
+                            <td>Ana Maria Braga</td>
+                            <td>33</td>
+                            <td>6502</td>
+                            <td>02/01/2025</td>
+                            <td>21:43:08</td>
+                        </tr>
+                        </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

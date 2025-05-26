@@ -1,0 +1,56 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style-dashboard.css' %}">
+    <title>Dashboard Empresa</title>
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <h1 class="greeting">Bem-vindo, @empresa!</h1>
+            <a href="{{ previous_url }}" class="btn btn-logout">SAIR</a> </header>
+
+        <nav class="dashboard-actions">
+            <a href="{{ add_motorista }}" class="btn btn-action"> <span class="icon">+</span>
+                Cadastrar Motorista
+            </a>
+            <a href="{{ add_linha }}" class="btn btn-action"> <span class="icon">+</span>
+                Cadastrar Linha de Onibus
+            </a>
+            <a href="{{ dashboard}}" class="btn btn-action"> <span class="icon icon-list">📈</span> Dashboard
+            </a>
+        </nav>
+
+        <main class="dashboard-main">
+            <div class="tab-title">LISTA DE USUÁRIOS</div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>CPF</th>
+                            <th>LOGIN</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>João da Costa e Silva</td>
+                            <td>123.123.123-24</td>
+                            <td>MT01</td>
+                        </tr>
+                        <tr>
+                            <td>João da Costa e Silva</td>
+                            <td>123.123.123-24</td>
+                            <td>MT01</td>
+                        </tr>
+                        </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
