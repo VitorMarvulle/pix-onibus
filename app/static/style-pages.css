@@ -43,6 +43,38 @@ html, body {
     position: relative;
 }
 
+/* Header styling */
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px 15px;
+    position: relative;
+}
+
+.header-left {
+    text-align: left;
+}
+
+.header-right {
+    text-align: right;
+}
+
+.button-back {
+    font-weight: 200;
+    font-size: 70px;
+    text-decoration: none;
+    color: rgb(235, 210, 130);
+    display: inline-block;
+}
+
+.logo-home h3 {
+    margin: 0;
+    color: rgb(235, 210, 130);
+    font-size: 24px;
+}
+
 .top-left {
     position: absolute;
     top: var(--spacing-md);

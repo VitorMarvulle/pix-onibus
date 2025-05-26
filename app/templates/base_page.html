@@ -10,27 +10,31 @@
 </head>
 <body>
     <div class="container">
-
-        <!-- Top-left button -->
-        <div class="top-left">
-            <a href="{{ previous_url }}" class="button-back">Voltar</a>
-        </div>
-
-        <!-- Top-right text -->
-        <div class="logo-home">
-            <h3>OniPix</h3>
-        </div>
-
+        {% block back-btn %}
+        <!-- Header with left and right elements -->
+        <header class="site-header">
+            <div class="header-left">
+                <a href="{{ previous_url }}" class="button-back" aria-label="Go back"><</a>
+            </div>
+            
+            <div class="header-right">
+                <img src="{% static 'assets/logo.png' %}" alt="" style="height: 30px;">
+                <h3 class="logo-home">OniPix</h3>
+            </div>
+        </header>
+        {% endblock %}
+        
         <!-- Center card -->
         <div class="card">
             {% block content %}{% endblock %}
         </div>
-
+        
+        {% block middle-btn %}
         <!-- Bottom button -->
         <div class="bottom-center">
-            <a href="{{ next_url }}" class="button-next">Próximo</a>
+            <a href="{{ next_url }}" class="button-next">{% block content-btn %} Próximo {% endblock %}</a>
         </div>
-
+        {% endblock %}
     </div>
 </body>
 </html>

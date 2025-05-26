@@ -71,6 +71,29 @@ html, body {
         overflow: hidden;
     }
 
+    .empresa-button {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        text-decoration: none;
+    }
+
+        .right-side button {
+        padding: 8px 25px;
+        font-size: 1rem;
+        font-weight: 500;
+        font-family: "Poppins", sans-serif;
+        cursor: pointer;
+        border: none;
+        color: #1a1a1a;
+        border-radius: 40px;
+        transition: background 0.3s ease;
+        background: rgba(255, 255, 255, 0.445);
+    }
+
+        .right-side button:hover {
+        background-color: #77e2fd;
+    }
     .right-side .imagem img {
         width: 170%;
         height: 100%;

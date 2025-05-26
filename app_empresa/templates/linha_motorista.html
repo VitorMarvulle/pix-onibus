@@ -1,0 +1,194 @@
+{% extends 'base_page.html' %}
+
+{% block content %}
+<div class="texto-card" style="text-align: center; margin-bottom: 30px;"> 
+    <h1>Escolha sua Linha:</h1>
+</div>
+
+<!-- Dropdown list -->
+<div class="custom-dropdown-container">
+    <!-- Custom input field that acts as dropdown trigger -->
+    <div class="custom-input-field">
+        <input type="text" id="linhaInput" placeholder="linha" readonly>
+        <div class="selected-value" id="selectedValue">></div>
+        <div class="dropdown-icon">
+            <img src="" alt="Open dropdown" id="dropdownIcon">
+        </div>
+    </div>
+    
+    <!-- Custom dropdown options -->
+    <div class="dropdown-options" id="dropdownOptions">
+        <div class="option" data-value="13">13</div>
+        <div class="option" data-value="33">33</div>
+        <div class="option" data-value="11">11</div>
+        <div class="option" data-value="17">17</div>
+    </div>
+</div>
+
+<!-- Button below the dropdown -->
+<button class="action-button">ENTRAR</button>
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    h1, p {
+        text-align: center;
+    }
+    
+    .custom-dropdown-container {
+        width: 280px;
+        max-width: 90%;
+        margin: 20px auto;
+        position: relative;
+    }
+
+        .texto-card h1 {
+        font-size: 50px;          /* Tamanho do título "Login" */
+        color: #0e0e0e;
+        margin-top: -40%;
+        margin-bottom: 5px;
+        font-weight: 600;
+    }
+    
+    .selected-value{
+    transform: rotate(90deg);
+    font-size: 50px;    
+    }
+
+    .custom-input-field {
+        padding: 1px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        border-radius: 25px;
+        overflow: hidden;
+        background-color: #a1a1a1;
+        cursor: pointer;
+    }
+    
+    .custom-input-field input {
+        flex: 1;
+        border: 1px solid #8A2BE2;
+        border-bottom: none;
+        padding: 10px 15px;
+        font-size: 16px;
+        background-color: white;
+        cursor: pointer;
+        border-radius: 20px;
+        outline: none;
+    }
+    
+    .selected-value {
+        /* background-color: #a0a0a0; */
+        color: #fff;
+        padding: 12px 15px;
+        flex: 1;
+        text-align: left;
+        font-weight: 500;
+        font-size: 18px;
+    }
+    
+    .dropdown-icon {
+        background-color: #a0a0a0;
+        padding: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .dropdown-icon img {
+        width: 20px;
+        height: 20px;
+        filter: brightness(0) invert(1);
+    }
+    
+    .dropdown-options {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: #e0e0e0;
+        border-radius: 0 0 8px 8px;
+        overflow: hidden;
+        z-index: 100;
+        display: none;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .dropdown-options.show {
+        display: block;
+    }
+    
+    .option {
+        padding: 12px 15px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        font-size: 16px;
+    }
+    
+    .option:hover {
+        background-color: #d0d0d0;
+    }
+    
+    .action-button {
+        display: block;
+        width: 280px;
+        max-width: 90%;
+        margin: 20px auto;
+        padding: 12px;
+        border: none;
+        border-radius: 25px;
+        background-color: #4FBFA5;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .action-button:hover {
+        background-color: #45a890;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const inputField = document.querySelector('.custom-input-field');
+        const dropdownOptions = document.getElementById('dropdownOptions');
+        const selectedValue = document.getElementById('selectedValue');
+        const options = document.querySelectorAll('.option');
+        const dropdownIcon = document.getElementById('dropdownIcon');
+        
+        // Toggle dropdown visibility when clicking the input field
+        inputField.addEventListener('click', function() {
+            dropdownOptions.classList.toggle('show');
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!inputField.contains(event.target) && !dropdownOptions.contains(event.target)) {
+                dropdownOptions.classList.remove('show');
+            }
+        });
+        
+        // Handle option selection
+        options.forEach(option => {
+            option.addEventListener('click', function() {
+                const value = this.getAttribute('data-value');
+                // selectedValue.textContent = value;
+                dropdownOptions.classList.remove('show');
+                
+                // If you need to store the value for form submission
+                const hiddenInput = document.getElementById('linhaInput');
+                if (hiddenInput) {
+                    hiddenInput.value = value;
+                }
+            });
+        });
+    });
+</script>
+{% block middle-btn %}  {% endblock %}
+{% endblock %}
+
