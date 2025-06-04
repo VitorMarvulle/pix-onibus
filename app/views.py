@@ -31,19 +31,29 @@ def pagamento(request):
     valor_unitario = 5.25
     valor_total = quantidade * valor_unitario
 
-    sdk = mercadopago.SDK("TEST-6337997335997184-040119-fce8a6dd49cf5dcc02d0ef2414c85283-1489971308")
+    sdk = mercadopago.SDK("APP_USR-6337997335997184-040119-bbb1fa4293760c754506a6679ed8f799-1489971308")
 
     payment_data = {
         "transaction_amount": float(valor_total),
         "description": f"Pagamento de {quantidade} passagem{'ns' if quantidade > 1 else ''}",
         "payment_method_id": "pix",
         "payer": {
-            "email": "comprador@email.com",
+            "email": "passageiro@onipix.com",
+            "phone": {
+                "area_code": "11",
+                "number": "999999999"
+            }
         }
     }
     payment_response = sdk.payment().create(payment_data)
+    print("DEBUG - Payment Response:", payment_response)  # Debug print
+
+    if "response" not in payment_response:
+        raise ValueError("Invalid payment response")
+
     payment = payment_response["response"]
-    payment_id = payment["id"]
+    
+    payment = payment_response["response"]
     payment_status = payment["status"]
     pix_payload = payment["point_of_interaction"]["transaction_data"]["qr_code"]
 
