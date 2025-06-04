@@ -2,20 +2,59 @@
 
 {% block content %}
 <h1>Efetue o pagamento:</h1>
-
+<br>
 <div class="container-pagamento">
     <h3>PASSAGEM MUNICIPAL</h3>
+    <br>
     <div id="qrcode">
        {% if qrcode_base64 %}
             <img src="data:image/png;base64,{{ qrcode_base64 }}"  
-            style="width: 200px; height: 200px; justify-content: center; display: flex; align-items: center; margin: 0 auto;"
+            style="width: 250px; height: 250px; justify-content: center; display: flex; align-items: center; margin: 0 auto;"
             alt="PIX QRCode">
         {% endif %}
     </div>
 
-    <p>R$ {{ passagem.valor }} 5,25</p>
-    <h2>{{ passagem.qtd }} 1 Unidade</h2>
+    <p>R$ {{ valor_total|floatformat:2 }}</p>
+    <h2>{{ quantidade }} Unidade{% if quantidade > 1 %}s{% endif %}</h2>
 
+     <button onclick="copiarPix()" class="button-pix">
+        PIX COPIA E COLA
+    </button>
 </div>
+
+<style>
+    .button-pix {
+        background-color: #62B6AA;
+        color: white;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 25px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 20px;
+        transition: background-color 0.3s;
+    }
+
+    .button-pix:hover {
+        background-color: #28A041;
+    }
+
+    .button-pix:active {
+        transform: scale(0.98);
+    }
+</style>
+
+<script>
+    function copiarPix() {
+        const pixCode = "{{ pix_copiacola|escapejs }}";
+        navigator.clipboard.writeText(pixCode).then(() => {
+            showNotification('Código PIX copiado com sucesso!', 'success');
+        }).catch(err => {
+            console.error('Erro ao copiar: ', err);
+            showNotification('Erro ao copiar o código PIX', 'error');
+        });
+    }
+</script>
 
 {% endblock %}

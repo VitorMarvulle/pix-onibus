@@ -8,17 +8,25 @@
     <p>Máx. 04</p>
 </div>
 
-
 <div class="card-menor">
     <img src="{% static 'assets/ticket.png' %}" alt="Tickets" class="card-image">
-    <div class="quantity-selector">
-                <button class="quantity-btn decrease-btn">
-                    <img src="{% static 'assets/arrow.png' %}" alt="Increase" style="width: 50%; height: auto; transform: scaleX(-1);">            </button>
-                <span class="quantity-value">1</span>
-                <button class="quantity-btn increase-btn">
-                    <img src="{% static 'assets/arrow.png' %}" alt="Increase" style="width: 50%; height: auto;">
-                </button>
-    </div>
+    <form method="POST" action="{{ next_url }}" id="quantityForm">
+        {% csrf_token %}
+        <input type="hidden" name="quantidade" id="quantidade" value="1">
+        <div class="quantity-selector">
+            <button type="button" class="quantity-btn decrease-btn">
+                <img src="{% static 'assets/arrow.png' %}" alt="Decrease" style="width: 50%; height: auto; transform: scaleX(-1);">
+            </button>
+            <span class="quantity-value">1</span>
+            <button type="button" class="quantity-btn increase-btn">
+                <img src="{% static 'assets/arrow.png' %}" alt="Increase" style="width: 50%; height: auto;">
+            </button>
+        </div>
+    </form>
+</div>
+
+<div class="bottom-center">
+    <button onclick="document.getElementById('quantityForm').submit()" class="button-next">Próximo</button>
 </div>
 
 {% block extra_js %}
@@ -35,12 +43,19 @@
         
         // Initial state check
         updateButtonStates();
-        
+
+        function updateQuantity() {
+            document.getElementById('quantidade').value = quantity;
+            quantityValue.textContent = quantity;
+            updateButtonStates();
+        }
+
         decreaseBtn.addEventListener('click', function() {
             if (quantity > MIN_QUANTITY) {
                 quantity--;
                 quantityValue.textContent = quantity;
                 updateButtonStates();
+                updateQuantity();
             }
         });
         
@@ -49,6 +64,7 @@
                 quantity++;
                 quantityValue.textContent = quantity;
                 updateButtonStates();
+                updateQuantity();
             }
         });
         

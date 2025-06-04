@@ -4,7 +4,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    
+
 }
 
 :root {
@@ -14,7 +14,7 @@
     --spacing-md: 20px;
     --spacing-lg: 30px;
     --spacing-xl: 40px;
-    
+
     /* Define variables for font sizes */
     --font-size-sm: 0.875rem;
     --font-size-md: 1rem;
@@ -23,12 +23,14 @@
     --font-size-xxl: 1.8rem;
 }
 
-html, body {
+html,
+body {
     height: 100%;
     width: 100%;
     font-family: "Poppins", sans-serif;
     background: linear-gradient(48deg, rgba(137, 218, 250, 1) 0%, rgba(194, 255, 219, 1) 50%, rgba(255, 232, 232, 1) 100%);
-    font-size: 16px; /* Base font size */
+    font-size: 16px;
+    /* Base font size */
 }
 
 .container {
@@ -214,13 +216,14 @@ html, body {
 /* Extra Large Screens (1440px and up) */
 @media (min-width: 1440px) {
     :root {
-        font-size: 18px; /* Slightly larger base font size for big screens */
+        font-size: 18px;
+        /* Slightly larger base font size for big screens */
     }
-    
+
     .card {
         max-width: 600px;
     }
-    
+
     .card-menor {
         max-width: 450px;
     }
@@ -238,7 +241,7 @@ html, body {
     .card {
         width: 90%;
     }
-    
+
     .container {
         padding: var(--spacing-sm);
     }
@@ -247,35 +250,37 @@ html, body {
 /* Small Screens (mobile landscape, 481px to 767px) */
 @media (min-width: 481px) and (max-width: 767px) {
     :root {
-        font-size: 15px; /* Slightly smaller base font size */
+        font-size: 15px;
+        /* Slightly smaller base font size */
     }
-    
+
     .card {
         width: 95%;
     }
-    
-    .top-left, .logo-home {
+
+    .top-left,
+    .logo-home {
         position: relative;
         margin-bottom: var(--spacing-sm);
     }
-    
+
     .top-left {
         align-self: flex-start;
     }
-    
+
     .logo-home {
         align-self: flex-end;
     }
-    
+
     .container {
         padding: var(--spacing-sm);
         justify-content: center;
     }
-    
+
     .card-image {
         width: 50%;
     }
-    
+
     .button-back {
         width: 50px;
         height: 50px;
@@ -285,55 +290,59 @@ html, body {
 /* Extra Small Screens (mobile portrait, up to 480px) */
 @media (max-width: 480px) {
     :root {
-        font-size: 14px; /* Smaller base font size for tiny screens */
-        --spacing-md: 15px; /* Adjust spacing for smaller screens */
+        font-size: 14px;
+        /* Smaller base font size for tiny screens */
+        --spacing-md: 15px;
+        /* Adjust spacing for smaller screens */
     }
-    
+
     .container {
         padding: var(--spacing-xs) var(--spacing-sm);
     }
-    
+
     .card {
         width: 100%;
         padding: var(--spacing-sm);
     }
-    
+
     .card-menor {
         width: 95%;
         padding: var(--spacing-sm);
     }
-    
-    .top-left, .logo-home {
+
+    .top-left,
+    .logo-home {
         position: relative;
         margin-bottom: var(--spacing-xs);
     }
-    
+
     .top-left {
         align-self: flex-start;
     }
-    
+
     .logo-home {
         align-self: flex-end;
     }
-    
-    .button-next, .button {
+
+    .button-next,
+    .button {
         padding: 8px 16px;
         font-size: var(--font-size-sm);
     }
-    
+
     .button-back {
         width: 45px;
         height: 45px;
     }
-    
+
     .quantity-btn img {
         width: 24px;
     }
-    
+
     .quantity-value {
         margin: 0 var(--spacing-sm);
     }
-    
+
     .card-image {
         width: 70%;
     }
@@ -342,12 +351,13 @@ html, body {
 /* Fix for height on mobile browsers accounting for address bar */
 @media (max-height: 600px) {
     .container {
-        min-height: 100vh; /* Use min-height instead of height */
+        min-height: 100vh;
+        /* Use min-height instead of height */
         height: auto;
         padding-top: 60px;
         padding-bottom: 60px;
     }
-    
+
     .card {
         margin: var(--spacing-sm) 0;
     }
@@ -360,13 +370,14 @@ html, body {
         flex-wrap: wrap;
         justify-content: center;
     }
-    
+
     .card {
         margin: var(--spacing-xs) var(--spacing-sm);
         min-height: auto;
     }
-    
-    .top-left, .logo-home {
+
+    .top-left,
+    .logo-home {
         position: absolute;
     }
 }
@@ -374,10 +385,12 @@ html, body {
 /* Keeping the existing inverted layout for mobile */
 @media (max-width: 768px) {
     .container.with-image {
-        flex-direction: column-reverse; /* Only apply for containers with images */
+        flex-direction: column-reverse;
+        /* Only apply for containers with images */
     }
 
-    .right-side, .left-side {
+    .right-side,
+    .left-side {
         width: 100%;
         height: auto;
         min-height: 40vh;
