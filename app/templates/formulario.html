@@ -6,12 +6,16 @@
     <p>Insira seus dados para continuar.</p>
 </div>
 
-<div class="card-menor">
-
+<form method="POST" action="{{ next_url }}">
+    {% csrf_token %}
+    <input type="hidden" name="quantidade" value="{{ quantidade }}">
     <div class="login-options">      
-        <input type="text" class="login-input" id="celular" placeholder="celular">
+        <input type="text" class="login-input" name="celular" id="celular" placeholder="celular">
     </div>
-</div>
+    <div class="bottom-center">
+        <button type="submit" class="button-next">Próximo</button>
+    </div>
+</form>
 
 {% block extra_css %}
 <style>

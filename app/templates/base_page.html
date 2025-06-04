@@ -9,6 +9,7 @@
     <title>Pix Onibus</title>
 </head>
 <body>
+    {% include 'mensagem.html' %}
     <div class="container">
         {% block back-btn %}
         <!-- Header with left and right elements -->
@@ -31,10 +32,11 @@
         
         {% block middle-btn %}
         <!-- Bottom button -->
-        <div class="bottom-center">
+        {% comment %} <div class="bottom-center">
             <a href="{{ next_url }}" class="button-next">{% block content-btn %} Próximo {% endblock %}</a>
-        </div>
+        </div> {% endcomment %}
         {% endblock %}
     </div>
+    <script src="{% static 'js/notificacao.js' %}"></script>
 </body>
 </html>
