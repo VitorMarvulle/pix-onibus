@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'style-pages.css' %}">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <title>Pix Onibus</title>
 </head>
 <body>
@@ -26,7 +27,8 @@
         {% endblock %}
         
         <!-- Center card -->
-        <div class="card">
+         
+        <div class="card" data-aos="flip-right">
             {% block content %}{% endblock %}
         </div>
         
@@ -38,5 +40,9 @@
         {% endblock %}
     </div>
     <script src="{% static 'js/notificacao.js' %}"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
 </body>
 </html>
