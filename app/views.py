@@ -1,7 +1,12 @@
-from django.shortcuts import render
+import datetime
+from decimal import Decimal
+from django.http import JsonResponse
+from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_protect
 import mercadopago, base64, qrcode
 from io import BytesIO
+
+from app_empresa.models import Passagem, gerarCodigoPassagem
 
 def home(request):
     return render(request, 'home.html', {
@@ -46,40 +51,76 @@ def pagamento(request):
         }
     }
     payment_response = sdk.payment().create(payment_data)
-    print("DEBUG - Payment Response:", payment_response)  # Debug print
-
-    if "response" not in payment_response:
-        raise ValueError("Invalid payment response")
-
     payment = payment_response["response"]
     
-    payment = payment_response["response"]
+    payment_id = payment["id"]
     payment_status = payment["status"]
-    pix_payload = payment["point_of_interaction"]["transaction_data"]["qr_code"]
+    status = False
 
+    pix_payload = payment["point_of_interaction"]["transaction_data"]["qr_code"]
     qr = qrcode.make(pix_payload)
     buffer = BytesIO()
     qr.save(buffer, format="PNG")
     img_base64 = base64.b64encode(buffer.getvalue()).decode()
 
-     #status = False
-     #if payment_status == "approved":
-        #status = True
-        #Liberar próxima página (bilhete.html)
+    if payment_status == "approved":
+        status = True
+        return redirect('bilhete')
+    request.session['payment_id'] = payment_id
         
     return render(request, 'pagamento.html', {
         'previous_url': '/formulario/',
-        'next_url': '/bilhete/',
         'qrcode_base64': img_base64,
         'quantidade': quantidade,
         'valor_total': valor_total,
         'valor_unitario': valor_unitario,
-        'pix_copiacola': pix_payload
-        #'status': pago
+        'pix_copiacola': pix_payload,
+        'payment_id': payment_id,
+        'status': status
     })
 
+def check_payment_status(request):
+    payment_id = request.session.get('payment_id')
+    if not payment_id:
+        return JsonResponse({'error': 'Payment ID not found'})
+    
+    sdk = mercadopago.SDK("APP_USR-6337997335997184-040119-bbb1fa4293760c754506a6679ed8f799-1489971308")
+    payment = sdk.payment().get(payment_id)
+    
+    if payment["response"]["status"] == "approved":
+        return JsonResponse({'status': 'approved', 'redirect_url': '/bilhete/'})
+    
+    return JsonResponse({'status': payment["response"]["status"]})
+
 def bilhete(request):
+    ticket_number = gerarCodigoPassagem()
+
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=20,
+        border=3,
+    )
+    qr.add_data(ticket_number)
+    qr.make(fit=True)
+
+    img_qr = qr.make_image(fill_color="black", back_color="white")
+    buffer = BytesIO()
+    img_qr.save(buffer, format="PNG")
+    qr_image = base64.b64encode(buffer.getvalue()).decode()
+    current_datetime = datetime.datetime.now().strftime("%d/%m/%Y - %H:%M")
+
+    # passagem = Passagem.objects.create(
+    #     idPassagem=ticket_number,
+    #     valor=Decimal('5.25'),
+    #     dataCriacao=current_datetime,
+    #     usosDisponiveis=quantidade,
+    #     usuarioId = 2
+    # )
+
     return render(request, 'bilhete.html', {
-        'previous_url': '/pagamento/',
-        'next_url': '/',
+        'qr_code': qr_image,
+        'date': current_datetime,
+        'price': '5,25',
+        'ticket_number': ticket_number,
     })

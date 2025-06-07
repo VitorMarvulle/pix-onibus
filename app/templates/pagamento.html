@@ -55,6 +55,22 @@
             showNotification('Erro ao copiar o código PIX', 'error');
         });
     }
+
+    function checkPaymentStatus() {
+    fetch('/check-payment-status/')
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'approved') {
+                window.location.href = data.redirect_url;
+            } else {
+                setTimeout(checkPaymentStatus, 5000);
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+    checkPaymentStatus();
+});
 </script>
 
 {% endblock %}
