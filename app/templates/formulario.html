@@ -6,11 +6,15 @@
     <p>Insira seu número de celular continuar.</p>
 </div>
 
-<form method="POST" action="{{ next_url }}">
+<form method="POST" action="{% url 'pagamento' %}">
     {% csrf_token %}
     <input type="hidden" name="quantidade" value="{{ quantidade }}">
     <div class="login-options">      
-        <input type="text" class="login-input" name="celular" id="celular" placeholder="celular">
+        <input type="tel" class="login-input"
+        name="telefone" id="celular"
+        pattern="[0-9]{11}" 
+        placeholder="(11) 99999-9999"
+        required>
     </div>
     <div class="bottom-center">
         <button type="submit" class="button-next">Próximo</button>
