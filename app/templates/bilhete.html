@@ -3,9 +3,8 @@
 {% block content %}
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
-<h1>Pagamento realizado com sucesso.</h1>
-<br>
-<h2>Obrigado!</h2>
+<h1>Obrigado!</h1>
+<h2>Pagamento realizado com sucesso.</h2>
 <br>
 
     <div class="ticket" id="ticket-container">
@@ -16,7 +15,7 @@
         <p class="number">{{ ticket_number }}</p>
     </div>
 
-    <button onclick="downloadTicket()" class="save-button">Salvar Bilhete</button>
+    <button onclick="downloadTicket()" class="button-next">Salvar Bilhete</button>
 
 <script>
 function downloadTicket() {
@@ -37,15 +36,7 @@ function downloadTicket() {
 </script>
 
 <style>
-body {
-    background: linear-gradient(to top right, #d1f0f8, #cbeaf4);
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
+
 
 .ticket {
     background-color: #ffd740;
@@ -88,7 +79,7 @@ body {
     height: 150px;
 }
 
-.save-button {
+.button-next {
     display: block;
     margin: 20px auto;
     padding: 10px 20px;
