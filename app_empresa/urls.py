@@ -5,6 +5,8 @@ from . import views
 urlpatterns = [
     path('empresa', views.login, name='empresa'),
     path('add_linha/', views.add_linha, name='add_linha'),
+    path('editar_linha/<int:id>/', views.editar_linha, name='editar_linha'),
+    path('excluir_linha/<int:id>/',views.excluir_linha, name='excluir_linha'),
     path('add_motorista/', views.add_motorista, name='add_motorista'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('home_motorista/', views.home_motorista, name='home_motorista'),

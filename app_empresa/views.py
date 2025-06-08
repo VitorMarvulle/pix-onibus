@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from .forms import FuncionarioForm,LinhaForm
+from .models import Linha
 from django.contrib import messages
+from django.shortcuts import get_object_or_404
 
 
 def login(request):
@@ -29,11 +31,44 @@ def add_linha(request):
     else:
         form = LinhaForm()
 
+    linhas = Linha.objects.all().order_by('idLinha')
+
     context = {
-        'form':form
+        'form':form,
+        'linhas':linhas
     }
 
     return render(request, 'add_linha.html',context)
+
+def editar_linha(request, id):
+    linha = get_object_or_404(Linha, idLinha=id)
+    if request.method == 'POST':
+        form = LinhaForm(request.POST, instance=linha)
+        if form.is_valid():
+            linha = form.save(commit=False)
+            linha.nomeLinha = linha.nomeLinha.upper()
+            linha.save()
+            messages.success(request, "Linha Atualizada com sucesso!")
+            return redirect('add_linha')
+    
+    else:
+        form = LinhaForm(instance=linha)
+    
+    linhas = Linha.objects.all().order_by('idLinha')
+
+    context = {
+        'form':form,
+        'linhas':linhas
+    }
+
+    return render(request, 'add_linha.html',context)
+
+def excluir_linha(request,id):
+    linha = get_object_or_404(Linha, idLinha=id)
+    linha.delete()
+    messages.success(request, "Linha exluida com sucesso!")
+    return redirect('add_linha')
+
 
 def add_motorista(request):
     return render(request, 'add_motorista.html', {

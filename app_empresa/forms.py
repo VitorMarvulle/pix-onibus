@@ -18,8 +18,15 @@ class LinhaForm(forms.ModelForm):
   
   def clean_idLinha(self):
         idLinha = self.cleaned_data.get('idLinha')
-        if Linha.objects.filter(idLinha=idLinha).exists():
-            raise forms.ValidationError("Esta linha ja está cadastrada")
+
+        if self.instance.pk:
+          if Linha.objects.filter(idLinha=idLinha).exclude(pk=self.instance.pk).exists():
+              raise forms.ValidationError("Esta linha ja está cadastrada")
+          
+        else:
+          if Linha.objects.filter(idLinha=idLinha).exists():
+             raise forms.ValidationError("Esta linha ja está cadastrada")
+          
         return idLinha
 
     
