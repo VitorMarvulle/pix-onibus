@@ -6,14 +6,30 @@
     <h1>Cadastrar Linha de Ônibus</h1>
 </div>
 
-<div class="card-login"> <form method="POST" action="#">
+<div class="card-login"> 
+
+    <form method="POST" action="{% url 'add_linha' %}">
+        {% csrf_token %}
+        
         
         <div class="form-group">
-            <label for="email">Linha</label>
-            <input type="text" name="linha" class="login-input" id="linha" placeholder="" required>
+            <label for="idLinha">No da Linha</label>
+            {{ form.idLinha }}
+            {{ form.non_field_errors }}
+
+            {% if form.idLinha.errors %}
+            <div class="form-group"  style="color: red;">
+                {{ form.idLinha.errors }}
+            </div>
+            {% endif %}
+            
+            <label for="nomeLinha">Nome da Linha</label>
+            {{ form.nomeLinha}}
+
         </div>
-        
-        <button type="submit" class="btn-login"></a>Cadastrar</button>
+            
+        <button type="submit" class="btn-login">Cadastrar</button>
+
     </form>
 </div>
 

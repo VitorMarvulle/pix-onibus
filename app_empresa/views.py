@@ -1,4 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .forms import FuncionarioForm,LinhaForm
+from django.contrib import messages
+
 
 def login(request):
     return render(request, 'login.html', {
@@ -15,10 +18,22 @@ def dashboard(request):
     })
 
 def add_linha(request):
-    return render(request, 'add_linha.html', {
-        'previous_url': '/empresa/dashboard/',
-        'next_url': '/add_motorista/',
-    })
+    if request.method == 'POST':
+        form = LinhaForm(request.POST or None,request.FILES)
+        if form.is_valid():
+            linha = form.save(commit=False)
+            linha.nomeLinha = linha.nomeLinha.upper()
+            linha.save()
+            messages.success(request, "Linha Cadastrada com Sucesso!")
+            return redirect('add_linha')
+    else:
+        form = LinhaForm()
+
+    context = {
+        'form':form
+    }
+
+    return render(request, 'add_linha.html',context)
 
 def add_motorista(request):
     return render(request, 'add_motorista.html', {
