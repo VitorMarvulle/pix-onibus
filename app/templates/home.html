@@ -6,6 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'style-home.css' %}">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
     <title>Pix Onibus</title>
 </head>
 <body {% block bg %}{% endblock %}>
@@ -13,7 +15,9 @@
 <div class="container">
 
     <!-- Left side -->
-    <div class="left-side">
+    <div class="left-side" data-aos="fade-right"
+     data-aos-offset="100"
+     data-aos-duration="1500">
         
         <div class="logo-home"> 
            <img src="{% static 'assets/logo.png' %}" alt="" style="height: 40px;"> 
@@ -29,7 +33,9 @@
     </div>
 
     <!-- Right side -->
-    <div class="right-side">
+    <div class="right-side" data-aos="fade-left"
+     data-aos-offset="100"
+     data-aos-duration="1500">
         <div class="empresa-button">
             <a class="button" href="{{ empresas }}">
             <button>Empresas</button>
@@ -42,6 +48,9 @@
     </div>
 
 </div>
-
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
 </body>
 </html>

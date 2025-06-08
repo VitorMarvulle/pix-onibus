@@ -1,6 +1,101 @@
 {% extends 'base_page.html' %}
 
 {% block content %}
-<h1>Seu bilhete</h1>
-<p>Parabéns! Aqui está o seu bilhete.</p>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+<h1>Obrigado!</h1>
+<h2>Pagamento realizado com sucesso.</h2>
+<br>
+
+    <div class="ticket" id="ticket-container">
+        <p class="date">{{ date }}</p>
+        <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code" />
+        <p class="title">PASSAGEM MUNICIPAL</p>
+        <p class="price">R$ 5,25</p>
+        <p class="number">{{ ticket_number }}</p>
+    </div>
+
+    <button onclick="downloadTicket()" class="button-next">Salvar Bilhete</button>
+
+<script>
+function downloadTicket() {
+    const ticketElement = document.getElementById('ticket-container');
+    
+    html2canvas(ticketElement, {
+        scale: 2, // Better quality
+        backgroundColor: null,
+        logging: false
+    }).then(canvas => {
+        // Convert to image and download
+        const link = document.createElement('a');
+        link.download = 'bilhete-onibus.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    });
+}
+</script>
+
+<style>
+
+.ticket {
+    background-color: #ffd740;
+    border-radius: 0px 30px 0px 30px;
+    padding: 30px 20px;
+    width: 250px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.ticket p {
+    margin: 10px 0;
+}
+
+.ticket .date {
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.ticket .title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-top: 10px;
+}
+
+.ticket .price {
+    font-size: 1rem;
+    margin-top: 5px;
+}
+
+.ticket .number {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-top: 15px;
+}
+
+.ticket img {
+    margin-top: 10px;
+    width: 150px;
+    height: 150px;
+}
+
+.button-next {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.save-button:hover {
+    background-color: #45a049;
+}
+</style>
+
 {% endblock %}
+
+ 
