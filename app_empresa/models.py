@@ -42,7 +42,7 @@ class Funcionario(models.Model):
 
      return codigo
   
-  def gerarSenhaAleatoria(tamanho=6):
+  def gerarSenhaAleatoria(self,tamanho=6):
    caracteres = string.ascii_letters + string.digits  # Letras e números
    senha = ''.join(random.choice(caracteres) for _ in range(tamanho))
    return senha

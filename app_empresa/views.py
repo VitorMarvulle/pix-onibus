@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import FuncionarioForm,LinhaForm
-from .models import Linha
+from .models import Linha,Funcionario
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
 
@@ -35,7 +35,9 @@ def add_linha(request):
 
     context = {
         'form':form,
-        'linhas':linhas
+        'linhas':linhas,
+        'previous_url': '/empresa/dashboard/',
+        'next_url': '/add_motorista/'
     }
 
     return render(request, 'add_linha.html',context)
@@ -71,18 +73,46 @@ def excluir_linha(request,id):
 
 
 def add_motorista(request):
-    return render(request, 'add_motorista.html', {
-        'previous_url': '/empresa/dashboard/',
-        'next_url': '/lista_motorista/',
-    })
+    if request.method == 'POST':
+        form = FuncionarioForm(request.POST or None,request.FILES)
+        if form.is_valid():
+            funcionario = form.save(commit=False)
+            funcionario.funcao = funcionario.funcao.upper()
+            funcionario.save()
+        
+
+            context = {
+                'form': FuncionarioForm(),  # form limpo
+                'senha_gerada': funcionario.senha,
+                'funcionario': funcionario.nome,
+                'codigo': funcionario.codigo,
+                'mostrar_modal': True
+            }
+            
+            return render(request, 'add_motorista.html',context)
+    else:
+        form = FuncionarioForm()
+
+    context = {
+        'form':form
+    }
+
+    return render(request, 'add_motorista.html',context)
+    
 
 def lista_motorista(request):
-    return render(request, 'lista_motorista.html', {
+
+    funcionarios = Funcionario.objects.all().values()
+
+    context = {
+        'funcionarios': funcionarios,
         'previous_url': '/',
         'add_motorista': '/empresa/add_motorista/',
         'add_linha': '/empresa/add_linha/',
-        'dashboard': '/empresa/dashboard/',
-    })
+        'dashboard': '/empresa/dashboard/'
+    }
+
+    return render(request, 'lista_motorista.html',context)
 
 def linha_motorista(request):
     return render(request, 'linha_motorista.html', {

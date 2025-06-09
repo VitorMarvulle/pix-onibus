@@ -5,7 +5,26 @@ from .models import Funcionario,Linha,Passagem
 class FuncionarioForm(forms.ModelForm):
   class Meta:
     model = Funcionario
-    fields = ['nome','funcao','email','cpf']
+    fields = ['nome','funcao','cpf']
+    widgets = {
+          'nome': forms.TextInput(attrs={'class': 'login-input', 'placeholder': 'Nome completo'}),
+          'funcao': forms.TextInput(attrs={'class': 'login-input', 'placeholder': 'Função'}),
+          'cpf': forms.NumberInput(attrs={'class': 'login-input', 'placeholder': '00000000000','maxlength': '11',
+    'title': 'Digite apenas números'}),
+    }
+    
+  def clean_cpf(self):
+      cpf = self.cleaned_data.get('cpf')
+
+      if self.instance.pk:
+        if Funcionario.objects.filter(cpf=cpf).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError("Um fucionário com esse CPF já esta cadastrado!")
+        
+      else:
+        if Funcionario.objects.filter(cpf=cpf).exists():
+            raise forms.ValidationError("Um fucionário com esse CPF já esta cadastrado!")
+        
+      return cpf
 
 class LinhaForm(forms.ModelForm):
   class Meta:
