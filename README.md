@@ -65,7 +65,7 @@ Antes de começar, certifique-se de que você tem o seguinte instalado em sua m�
 
 1.  **Clone o Repositório**
     ```bash
-    git clone https:/github.com/vitormarvulle/pix-onibus.git
+    git clone https://github.com/vitormarvulle/pix-onibus.git
     ```
 
 2.  **Crie e Ative o Ambiente Virtual (`venv`)**
@@ -88,15 +88,7 @@ Antes de começar, certifique-se de que você tem o seguinte instalado em sua m�
 4.  **Configure as Variáveis de Ambiente 🔑**
     Este projeto usa um arquivo `.env` para gerenciar chaves de API e configurações sensíveis.
 
-    * Primeiro, copie o arquivo de exemplo `.env.example` para criar seu próprio arquivo `.env`:
-        ```bash
-        # No macOS/Linux
-        cp .env.example .env
-        
-        # No Windows
-        copy .env.example .env
-        ```
-    * Depois, abra o arquivo `.env` e preencha as variáveis com suas próprias credenciais. O arquivo `.env` **não é rastreado pelo Git**, então suas credenciais estarão seguras.
+    * Crie o arquivo `.env` no diretório raíz do projeto (onde está o manage.py) e preencha as variáveis com suas próprias credenciais. O arquivo `.env` **não é rastreado pelo Git**, então suas credenciais estarão seguras.
         ```ini
         # Exemplo de conteúdo do .env
         SECRET_KEY="sua_chave_secreta_aqui_gerada_pelo_django"
@@ -109,13 +101,8 @@ Antes de começar, certifique-se de que você tem o seguinte instalado em sua m�
     python manage.py migrate
     ```
 
-6.  **(Opcional) Crie um Superusuário**
-    Para acessar a área administrativa do Django (`/admin`).
-    ```bash
-    python manage.py createsuperuser
-    ```
 
-7.  **Execute a Aplicação! 🎉**
+6.  **Execute a Aplicação! 🎉**
     ```bash
     python manage.py runserver
     ```
