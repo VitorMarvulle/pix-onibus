@@ -25,6 +25,18 @@ class FuncionarioForm(forms.ModelForm):
             raise forms.ValidationError("Um fucionário com esse CPF já esta cadastrado!")
         
       return cpf
+  
+class LoginForm(forms.ModelForm):
+   class Meta:
+    model = Funcionario
+    fields = ['codigo','email','senha']
+    widgets = {
+            'codigo': forms.TextInput(attrs={'class': 'login-input', 'placeholder': 'Código Motorista'}),
+            'email': forms.EmailInput(attrs={'class': 'login-input','placeholder': 'exemplo@email.com'}),
+            'senha': forms.PasswordInput(attrs={'class': 'login-input'})
+        }
+      
+
 
 class LinhaForm(forms.ModelForm):
   class Meta:

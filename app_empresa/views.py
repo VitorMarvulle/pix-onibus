@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404
 
 
 def login(request):
+    
     return render(request, 'login.html', {
         'previous_url': '/',
         'next_url': '/empresa/dashboard/',
