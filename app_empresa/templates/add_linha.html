@@ -2,37 +2,145 @@
 
 
 {% block content %}
-<div class="texto-card" style="text-align: center; margin-bottom: 30px;"> 
-    <h1>Cadastrar Linha de Ônibus</h1>
-</div>
+<div class="container-flex">
 
-<div class="card-login"> <form method="POST" action="#">
-        
-        <div class="form-group">
-            <label for="email">Linha</label>
-            <input type="text" name="linha" class="login-input" id="linha" placeholder="" required>
-        </div>
-        
-        <button type="submit" class="btn-login"></a>Cadastrar</button>
-    </form>
+    <!-- FORMULÁRIO À ESQUERDA -->
+    <div class="card-login">
+        {% if form.instance.pk %}
+        <h1 style="text-align: center;">Editar Linha</h1>
+        {% else %}
+        <h1 style="text-align: center;">Cadastrar Linha</h1>
+        {% endif %}
+
+        <form method="POST"
+            action="{% if form.instance.pk %}{% url 'editar_linha' form.instance.pk %}{% else %}{% url 'add_linha' %}{% endif %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="idLinha">No da Linha</label>
+                {{ form.idLinha }}
+
+                <label for="nomeLinha">Nome da Linha</label>
+                {{ form.nomeLinha }}
+            </div>
+            <button type="submit" class="btn-login">
+                {% if form.instance.pk %}Atualizar{% else %}Cadastrar{% endif %}
+            </button>
+        </form>
+    </div>
+
+    <!-- LISTA DE LINHAS À DIREITA -->
+    <div class="card-lista">
+        <h2 style="text-align: center;">Linhas Cadastradas</h2>
+        <ul class="linha-lista">
+            {% for linha in linhas %}
+            <li class="linha-item">
+                <span><strong>{{ linha.idLinha }}</strong> - {{ linha.nomeLinha }}</span>
+                <div class="linha-actions">
+                    <a href="{% url 'editar_linha' linha.idLinha %}" class="btn-editar">Editar</a>
+                    <a href="{% url 'excluir_linha' linha.idLinha %}" class="btn-excluir"
+                        onclick="return confirm('Tem certeza que deseja excluir esta linha?');">Excluir</a>
+                </div>
+            </li>
+            {% empty %}
+            <li>Nenhuma linha cadastrada.</li>
+            {% endfor %}
+        </ul>
+    </div>
 </div>
 
 <style>
+    .container-flex {
+        display: flex;
+        gap: 40px;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 30px;
+        flex-wrap: wrap;
+    }
+
+    /* Card do formulário (já existente, reutilizado) */
+    .card-login {
+        background-color: #ffffff;
+        padding: 35px 30px;
+        border-radius: 25px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        width: 100%;
+        max-width: 350px;
+        box-sizing: border-box;
+    }
+
+    /* Card da lista de linhas */
+    .card-lista {
+        background-color: #ffffff;
+        padding: 35px 30px;
+        border-radius: 25px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        width: 100%;
+        max-width: 500px;
+        box-sizing: border-box;
+    }
+
+    .linha-lista {
+        list-style: none;
+        padding: 0;
+        margin-top: 20px;
+    }
+
+    .linha-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 18px;
+        margin-bottom: 12px;
+        background-color: #f1f1f1;
+        border-radius: 12px;
+    }
+
+    .linha-actions a {
+        margin-left: 8px;
+        padding: 6px 12px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .btn-editar {
+        background-color: #4FBBAF;
+        color: white;
+    }
+
+    .btn-excluir {
+        background-color: #ff5252;
+        color: white;
+    }
+
+
+
     /* Estilização para o card principal do formulário */
     .card-login {
-        background-color: #ffffff; /* Fundo branco do card */
-        padding: 35px 30px;       /* Padding interno do card (ajustado para mais espaço vertical) */
-        border-radius: 25px;      /* Cantos arredondados do card */
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); /* Sombra sutil (ajustada) */
+        background-color: #ffffff;
+        /* Fundo branco do card */
+        padding: 35px 30px;
+        /* Padding interno do card (ajustado para mais espaço vertical) */
+        border-radius: 25px;
+        /* Cantos arredondados do card */
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        /* Sombra sutil (ajustada) */
         width: 100%;
-        max-width: 350px;         /* Largura máxima do card (ajustada para ser similar à imagem) */
-        box-sizing: border-box;   /* Garante que padding não aumente a largura total */
-        margin: 0 auto;           /* Centraliza o card se o container pai permitir */
+        max-width: 350px;
+        /* Largura máxima do card (ajustada para ser similar à imagem) */
+        box-sizing: border-box;
+        /* Garante que padding não aumente a largura total */
+        margin: 0 auto;
+        /* Centraliza o card se o container pai permitir */
     }
 
     /* Estilização para o texto introdutório (opcional, baseado no seu HTML) */
     .texto-card h1 {
-        font-size: 50px;          /* Tamanho do título "Login" */
+        font-size: 50px;
+        /* Tamanho do título "Login" */
         color: #0e0e0e;
         margin-top: 0;
         margin-bottom: 5px;
@@ -41,68 +149,99 @@
 
     /* Estilização para os grupos de formulário (label + input) */
     .form-group {
-        margin-bottom: 20px;      /* Espaçamento entre os grupos de label/input */
+        margin-bottom: 20px;
+        /* Espaçamento entre os grupos de label/input */
         width: 100%;
     }
 
-    .form-group:last-of-type { /* Remove a margem inferior do último grupo antes do botão */
+    .form-group:last-of-type {
+        /* Remove a margem inferior do último grupo antes do botão */
         margin-bottom: 25px;
     }
 
     .form-group label {
-        display: block;           /* Faz o label ocupar a linha toda */
-        font-size: 13px;          /* Tamanho da fonte do label */
-        color: #808080;           /* Cor do label (cinza claro da imagem) */
-        margin-bottom: 8px;       /* Espaçamento abaixo do label */
-        padding-left: 18px;       /* Alinha o label com o texto do input (ajustado) */
-        text-align: left;         /* Alinhamento do label */
+        display: block;
+        /* Faz o label ocupar a linha toda */
+        font-size: 13px;
+        /* Tamanho da fonte do label */
+        color: #808080;
+        /* Cor do label (cinza claro da imagem) */
+        margin-bottom: 8px;
+        /* Espaçamento abaixo do label */
+        padding-left: 18px;
+        /* Alinha o label com o texto do input (ajustado) */
+        text-align: left;
+        /* Alinhamento do label */
     }
-    
+
     /* Estilização para os campos de input */
     .login-input {
         width: 100%;
-        padding: 15px 20px;       /* Padding interno do input (altura e espaço para o texto) */
-        border: none;             /* Remove a borda padrão */
-        border-radius: 50px;      /* Cantos bem arredondados (formato pílula) */
-        background-color: #f1f1f1; /* Cor de fundo do input (cinza bem claro da imagem) */
-        font-family: inherit;     /* Usa a fonte do corpo/pai */
-        font-size: 15px;          /* Tamanho da fonte do texto do input */
-        color: #333;              /* Cor do texto digitado */
-        text-align: left;         /* Alinhamento do texto e placeholder */
-        box-sizing: border-box;   /* Garante que padding não aumente a largura total */
-        line-height: normal;      /* Garante altura de linha padrão */
+        padding: 15px 20px;
+        /* Padding interno do input (altura e espaço para o texto) */
+        border: none;
+        /* Remove a borda padrão */
+        border-radius: 50px;
+        /* Cantos bem arredondados (formato pílula) */
+        background-color: #f1f1f1;
+        /* Cor de fundo do input (cinza bem claro da imagem) */
+        font-family: inherit;
+        /* Usa a fonte do corpo/pai */
+        font-size: 15px;
+        /* Tamanho da fonte do texto do input */
+        color: #333;
+        /* Cor do texto digitado */
+        text-align: left;
+        /* Alinhamento do texto e placeholder */
+        box-sizing: border-box;
+        /* Garante que padding não aumente a largura total */
+        line-height: normal;
+        /* Garante altura de linha padrão */
     }
-    
+
     .login-input::placeholder {
-        color: #505050;           /* Cor do placeholder (mais escura, como na imagem) */
-        text-align: left;         /* Alinhamento do placeholder */
+        color: #505050;
+        /* Cor do placeholder (mais escura, como na imagem) */
+        text-align: left;
+        /* Alinhamento do placeholder */
     }
-    
+
     .login-input:focus {
-        outline: none;            /* Remove o outline padrão ao focar */
-        background-color: #e9e9e9; /* Leve mudança de cor ao focar */
+        outline: none;
+        /* Remove o outline padrão ao focar */
+        background-color: #e9e9e9;
+        /* Leve mudança de cor ao focar */
     }
-    
+
     /* Estilização para o botão de login */
     .btn-login {
         width: 100%;
-        padding: 15px 20px;       /* Padding interno do botão */
+        padding: 15px 20px;
+        /* Padding interno do botão */
         border: none;
-        border-radius: 50px;      /* Cantos bem arredondados */
-        background-color: #4FBBAF; /* Cor verde-azulada do botão (ajuste fino da cor) */
-        color: white;             /* Cor do texto do botão */
+        border-radius: 50px;
+        /* Cantos bem arredondados */
+        background-color: #4FBBAF;
+        /* Cor verde-azulada do botão (ajuste fino da cor) */
+        color: white;
+        /* Cor do texto do botão */
         font-family: inherit;
-        font-size: 15px;          /* Tamanho da fonte do botão */
+        font-size: 15px;
+        /* Tamanho da fonte do botão */
         font-weight: bold;
-        text-transform: uppercase; /* Texto em maiúsculas */
-        letter-spacing: 0.5px;    /* Pequeno espaçamento entre letras */
+        text-transform: uppercase;
+        /* Texto em maiúsculas */
+        letter-spacing: 0.5px;
+        /* Pequeno espaçamento entre letras */
         cursor: pointer;
         transition: background-color 0.2s ease-in-out;
-        margin-top: 10px;         /* Espaçamento acima do botão */
+        margin-top: 10px;
+        /* Espaçamento acima do botão */
     }
-    
+
     .btn-login:hover {
-        background-color: #339186; /* Cor do botão no hover (um pouco mais escura) */
+        background-color: #339186;
+        /* Cor do botão no hover (um pouco mais escura) */
     }
 </style>
 

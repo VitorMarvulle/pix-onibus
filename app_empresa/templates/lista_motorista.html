@@ -32,21 +32,20 @@
                     <thead>
                         <tr>
                             <th>Nome</th>
+                            <th>Código</th>
+                            <th>Função</th>
                             <th>CPF</th>
-                            <th>LOGIN</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {% for funcionario in funcionarios %}
                         <tr>
-                            <td>João da Costa e Silva</td>
-                            <td>123.123.123-24</td>
-                            <td>MT01</td>
+                            <td>{{funcionario.nome}}</td>
+                            <td>{{funcionario.codigo}}</td>
+                            <td>{{funcionario.funcao}}</td>
+                            <td>{{funcionario.cpf}}</td>
                         </tr>
-                        <tr>
-                            <td>João da Costa e Silva</td>
-                            <td>123.123.123-24</td>
-                            <td>MT01</td>
-                        </tr>
+                        {% endfor %}
                         </tbody>
                 </table>
             </div>

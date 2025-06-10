@@ -18,9 +18,13 @@ class Funcionario(models.Model):
   cpf = models.BigIntegerField(unique=True)
 
   def save(self, *args, **kwargs):
-     if not self.codigo:
-        self.codigo = self.gerarCodigoUnico()
-     super().save(*args, **kwargs)
+   if not self.codigo:
+      self.codigo = self.gerarCodigoUnico()
+      
+   if not self.senha:
+      self.senha = self.gerarSenhaAleatoria()
+
+   super().save(*args, **kwargs)
 
   def gerarCodigoUnico(self):
      abreviacao = self.funcao[:2].upper()
@@ -37,6 +41,12 @@ class Funcionario(models.Model):
         contador += 1
 
      return codigo
+  
+  def gerarSenhaAleatoria(self,tamanho=6):
+   caracteres = string.ascii_letters + string.digits  # Letras e números
+   senha = ''.join(random.choice(caracteres) for _ in range(tamanho))
+   return senha
+     
 
   def __str__(self):
         return f'{self.nome} - {self.funcao}'

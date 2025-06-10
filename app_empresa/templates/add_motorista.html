@@ -3,30 +3,59 @@
 
 {% block content %}
 <div class="texto-card" style="text-align: center; margin-bottom: 30px;"> 
-    <h1>Cadastrar Motorista</h1>
+    {% if form.instance.pk %}
+    <h1 style="text-align: center;">Editar Motorista</h1>
+    {% else %}
+    <h1 style="text-align: center;">Cadastrar Motorista</h1>
+    {% endif %}
+
 </div>
 
-<div class="card-login"> <form method="POST" action="#">
-        
+<div class="card-login"> 
+    <form method="POST" action="{% if form.instance.pk %}{% url 'editar_motorista' form.instance.pk %}{% else %}{% url 'add_motorista' %}{% endif %}">
+    {% csrf_token %}
+    
         <div class="form-group">
-            <label for="email">Nome</label>
-            <input type="text" name="nome" class="login-input" id="nome" placeholder="Nome completo" required>
+            <label for="nome">Nome</label>
+            {{ form.nome }}
         </div>
 
         <div class="form-group">
-            <label for="email">CPF</label>
-            <input type="text" name="cpf" class="login-input" id="cpf" placeholder="000.000.000-00" required>
+            <label for="funcao">Função</label>
+            {{ form.funcao }}
         </div>
-        
-        
+
         <div class="form-group">
-            <label for="senha">senha</label>
-            <input type="password" name="senha" class="login-input" id="senha" placeholder="••••••" required>
+            <label for="cpf">CPF</label>
+            {{ form.cpf }}
         </div>
-        
-        <button type="submit" class="btn-login"></a>Cadastrar</button>
+            
+        <button type="submit" class="btn-login">
+            {% if form.instance.pk %}Atualizar{% else %}Cadastrar{% endif %}
+        </button>
+
     </form>
 </div>
+
+{% if mostrar_modal %}
+<!-- Modal -->
+<div id="senhaModal" class="modal" style="display:block; position: fixed; top: 0; left: 0; width:100%; height:100%; background-color: rgba(0,0,0,0.5);">
+    <div style="background-color: #fff; margin: 15% auto; padding: 20px; border-radius: 10px; width: 300px; text-align:center;">
+        <h3>Senha Gerada</h3>
+        <p>Anote a senha e entregue para o funcionario: {{ funcionario }}</p>
+        <p>Codigo de Acesso:<strong>{{ codigo }}</strong></p>
+        <p>Senha:<strong>{{ senha_gerada }}</strong></p>
+        <button onclick="fecharModalERedirecionar()" style="margin-top:10px; padding: 5px 10px;">OK</button>
+    </div>
+</div>
+
+<script>
+function fecharModalERedirecionar() {
+    document.getElementById('senhaModal').style.display = 'none';
+    window.location.href = "{% url 'lista_motorista' %}";
+}
+</script>
+{% endif %}
 
 <style>
     /* Estilização para o card principal do formulário */
