@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import FuncionarioForm,LinhaForm
-from .models import Linha,Funcionario
+from .models import Linha,Funcionario,Historico
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
 
@@ -12,12 +12,18 @@ def login(request):
     })
 
 def dashboard(request):
-    return render(request, 'dashboard.html', {
+    
+    historicos = Historico.objects.select_related('usuario','funcionario','passagem','linha').all().order_by('-datahora')
+
+    context = {
+        'historicos':historicos,
         'previous_url': '/',
         'add_motorista': '/empresa/add_motorista/',
         'add_linha': '/empresa/add_linha/',
-        'lista_motorista': '/empresa/lista_motorista/',
-    })
+        'lista_motorista': '/empresa/lista_motorista/'
+    }
+
+    return render(request, 'dashboard.html',context)
 
 def add_linha(request):
     if request.method == 'POST':
