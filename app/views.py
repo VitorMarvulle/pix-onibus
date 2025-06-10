@@ -2,6 +2,7 @@ from decimal import Decimal
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_protect
+from django.conf import settings 
 import mercadopago, base64, qrcode
 from io import BytesIO
 
@@ -45,10 +46,10 @@ def pagamento(request):
         area_code = area_code
         number = number
 
-    valor_unitario = 5.25
+    valor_unitario = 0.01
     valor_total = quantidade * valor_unitario
 
-    sdk = mercadopago.SDK("APP_USR-6337997335997184-040119-bbb1fa4293760c754506a6679ed8f799-1489971308")
+    sdk = mercadopago.SDK(settings.MERCADOPAGO_ACCESS_TOKEN)
 
     payment_data = {
         "transaction_amount": float(valor_total),
@@ -99,7 +100,7 @@ def check_payment_status(request):
     quantidade = request.session.get('quantidade')
     telefone = request.session.get('telefone')
         
-    sdk = mercadopago.SDK("APP_USR-6337997335997184-040119-bbb1fa4293760c754506a6679ed8f799-1489971308")
+    sdk = mercadopago.SDK(settings.MERCADOPAGO_ACCESS_TOKEN)
     payment = sdk.payment().get(payment_id)
     
     if payment["response"]["status"] == "approved":
