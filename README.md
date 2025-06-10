@@ -47,7 +47,7 @@ Esta aplicação foi construída utilizando as seguintes tecnologias e ferrament
 * **Frontend:** HTML, CSS, JavaScript
 * **Banco de Dados:** [SQLite (desenvolvimento), PostgreSQL (produção)]
 * **Pagamentos:** API do Mercado Pago
-* **Outros:** `django-environ`, `gunicorn`, etc.
+* **Outros:** `django-environ`, `qrcode` etc.
 
 ---
 
@@ -65,8 +65,7 @@ Antes de começar, certifique-se de que você tem o seguinte instalado em sua m�
 
 1.  **Clone o Repositório**
     ```bash
-    git clone [https://github.com/](https://github.com/)[vitormarvulle]/[pix-onibus].git
-    cd [seu-projeto]
+    git clone https:/github.com/vitormarvulle/pix-onibus.git
     ```
 
 2.  **Crie e Ative o Ambiente Virtual (`venv`)**
