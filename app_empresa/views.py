@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
 from .forms import FuncionarioForm,LinhaForm,LoginForm,SelecionarLinhaForm
-from .models import Linha,Funcionario,Historico
+from .models import Linha,Funcionario,Historico, Passagem
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
-
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 def login(request):
     if request.method == 'POST':
@@ -102,7 +105,6 @@ def excluir_linha(request,id):
     messages.success(request, "Linha exluida com sucesso!")
     return redirect('add_linha')
 
-
 def add_motorista(request):
     if request.method == 'POST':
         form = FuncionarioForm(request.POST or None,request.FILES)
@@ -130,7 +132,6 @@ def add_motorista(request):
 
     return render(request, 'add_motorista.html',context)
     
-
 def lista_motorista(request):
 
     funcionarios = Funcionario.objects.all().values()
@@ -180,7 +181,7 @@ def home_motorista(request):
     context = {
         'funcionario':funcionario,
         'linha': linha,
-        'previous_url': '/empresa/linha_motorista/',
+        'previous_url': '/empresa/home_motorista/',
         'next_url': '/login/'
 
     }
@@ -190,3 +191,51 @@ def confirmacao(request):
     return render(request, 'confirmacao.html', {
         'previous_url': '/empresa/home_motorista/',
     })
+
+@csrf_exempt # Use com cuidado, idealmente configure CSRF no frontend
+@require_POST # Garante que esta view só aceite requisições POST
+def validar_bilhete(request):
+    try:
+        data = json.loads(request.body)
+        ticket_id = data.get('ticket_id')
+        print(f"--- Buscando no banco pelo ID recebido: '{ticket_id}' ---")
+
+        if not ticket_id:
+            return JsonResponse({'status': 'error', 'message': 'ID do bilhete não fornecido.'}, status=400)
+
+        # Busca o bilhete no banco de dados
+        passagem = Passagem.objects.get(idPassagem=ticket_id)
+
+        # Verifica se ainda há usos disponíveis
+        if passagem.usosDisponiveis > 0:
+            passagem.usosDisponiveis -= 1  # Decrementa o número de usos
+            passagem.save()
+            
+            # Retorna sucesso com a URL para redirecionamento
+            return JsonResponse({
+                'status': 'success',
+                'message': 'Bilhete validado com sucesso!',
+                'redirect_url': '/empresa/confirmacao/'
+            })
+        
+        else:
+            # Retorna erro se não houver usos
+            return JsonResponse({
+                'status': 'error',
+                'message': 'Este bilhete não possui mais usos disponíveis.',
+                'redirect_url': '/empresa/confirmacao/?status=error'
+            }, status=400)
+
+    except Passagem.DoesNotExist:
+        # Retorna erro se o bilhete não for encontrado
+        return JsonResponse({
+            'status': 'error',
+            'message': 'Bilhete inválido ou não encontrado.',
+            'redirect_url': '/empresa/confirmacao/?status=error'
+        }, status=404)
+        
+    except Exception as e:
+        # Captura outros erros inesperados
+        
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+        

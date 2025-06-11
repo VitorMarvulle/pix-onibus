@@ -158,7 +158,7 @@ def bilhete(request):
 
         return render(request, 'bilhete.html', {
             'qr_code': qr_image,
-            'date': passagem.dataCriacao.strftime("%d/%m/%Y - %H:%M"),
+            'date': passagem.dataCriacao,
             'price': passagem.valor,
             'ticket_number': passagem.idPassagem,
             'quantidade': passagem.usosDisponiveis
