@@ -5,28 +5,33 @@
     <h1>Escolha sua Linha:</h1>
 </div>
 
-<!-- Dropdown list -->
-<div class="custom-dropdown-container">
-    <!-- Custom input field that acts as dropdown trigger -->
-    <div class="custom-input-field">
-        <input type="text" id="linhaInput" placeholder="linha" readonly>
-        <div class="selected-value" id="selectedValue">></div>
-        <div class="dropdown-icon">
-            <img src="" alt="Open dropdown" id="dropdownIcon">
+<!-- Formulario Django -->
+<form method="post" id="linhaForm">
+    {% csrf_token %}
+
+    <!-- Campo oculto que será preenchido com o valor da linha -->
+    <input type="hidden" name="linha" id="linhaSelecionada">
+
+    <!-- Dropdown visual customizado -->
+    <div class="custom-dropdown-container">
+        <div class="custom-input-field">
+            <input type="text" id="linhaInput" placeholder="linha" readonly>
+            <div class="selected-value" id="selectedValue">></div>
+            <div class="dropdown-icon">
+                <img src="" alt="Open dropdown" id="dropdownIcon">
+            </div>
+        </div>
+
+        <div class="dropdown-options" id="dropdownOptions">
+            {% for linha in form.fields.linha.queryset %}
+                <div class="option" data-value="{{ linha.idLinha }}">{{ linha.idLinha }} - {{ linha.nomeLinha }}</div>
+            {% endfor %}
         </div>
     </div>
-    
-    <!-- Custom dropdown options -->
-    <div class="dropdown-options" id="dropdownOptions">
-        <div class="option" data-value="13">13</div>
-        <div class="option" data-value="33">33</div>
-        <div class="option" data-value="11">11</div>
-        <div class="option" data-value="17">17</div>
-    </div>
-</div>
 
-<!-- Button below the dropdown -->
-<button class="action-button">ENTRAR</button>
+    <button type="submit" class="action-button">ENTRAR</button>
+</form>
+
 <style>
     body {
         font-family: 'Poppins', sans-serif;
@@ -154,39 +159,32 @@
 </style>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const inputField = document.querySelector('.custom-input-field');
-        const dropdownOptions = document.getElementById('dropdownOptions');
-        const selectedValue = document.getElementById('selectedValue');
-        const options = document.querySelectorAll('.option');
-        const dropdownIcon = document.getElementById('dropdownIcon');
-        
-        // Toggle dropdown visibility when clicking the input field
-        inputField.addEventListener('click', function() {
-            dropdownOptions.classList.toggle('show');
+    const dropdownInput = document.getElementById('linhaInput');
+    const dropdownOptions = document.getElementById('dropdownOptions');
+    const options = dropdownOptions.querySelectorAll('.option');
+    const selectedValue = document.getElementById('selectedValue');
+    const linhaSelecionada = document.getElementById('linhaSelecionada');
+
+    dropdownInput.addEventListener('click', () => {
+        dropdownOptions.classList.toggle('show');
+    });
+
+    options.forEach(option => {
+        option.addEventListener('click', () => {
+            const value = option.getAttribute('data-value');
+            const label = option.textContent;
+
+            dropdownInput.value = label;
+            linhaSelecionada.value = value; // preenche campo hidden
+            dropdownOptions.classList.remove('show');
         });
-        
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!inputField.contains(event.target) && !dropdownOptions.contains(event.target)) {
-                dropdownOptions.classList.remove('show');
-            }
-        });
-        
-        // Handle option selection
-        options.forEach(option => {
-            option.addEventListener('click', function() {
-                const value = this.getAttribute('data-value');
-                // selectedValue.textContent = value;
-                dropdownOptions.classList.remove('show');
-                
-                // If you need to store the value for form submission
-                const hiddenInput = document.getElementById('linhaInput');
-                if (hiddenInput) {
-                    hiddenInput.value = value;
-                }
-            });
-        });
+    });
+
+    // Fecha se clicar fora
+    document.addEventListener('click', function(e) {
+        if (!dropdownInput.contains(e.target) && !dropdownOptions.contains(e.target)) {
+            dropdownOptions.classList.remove('show');
+        }
     });
 </script>
 {% block middle-btn %}  {% endblock %}

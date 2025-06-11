@@ -7,19 +7,19 @@
     <p>Por favor, preencha os campos abaixo.</p>
 </div>
 
-<div class="card-login"> <form method="POST" action="#">
-        
+<div class="card-login"> 
+    <form method="POST" action="#">
+        {% csrf_token %}
         <div class="form-group">
-            <label for="email">email</label>
-            <input type="text" name="email" class="login-input" id="email" placeholder="empresa@email.com" required>
+            {{ form.login_opcao.label_tag }} {{ form.login_opcao }}
+            {{ form.identificador.label_tag }} {{ form.identificador }}
         </div>
         
         <div class="form-group">
-            <label for="senha">senha</label>
-            <input type="password" name="senha" class="login-input" id="senha" placeholder="••••••" required>
+            {{ form.senha.label_tag}} {{ form.senha }}
         </div>
         
-        <button type="submit" class="btn-login"></a>ENTRAR</button>
+        <button type="submit" class="btn-login">ENTRAR</button>
     </form>
 </div>
 
