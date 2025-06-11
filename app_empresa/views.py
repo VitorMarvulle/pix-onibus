@@ -142,9 +142,9 @@ def confirmacao(request):
 @require_POST # Garante que esta view só aceite requisições POST
 def validar_bilhete(request):
     try:
-        # Extrai o dado JSON do corpo da requisição
         data = json.loads(request.body)
         ticket_id = data.get('ticket_id')
+        print(f"--- Buscando no banco pelo ID recebido: '{ticket_id}' ---")
 
         if not ticket_id:
             return JsonResponse({'status': 'error', 'message': 'ID do bilhete não fornecido.'}, status=400)
@@ -163,6 +163,7 @@ def validar_bilhete(request):
                 'message': 'Bilhete validado com sucesso!',
                 'redirect_url': '/empresa/confirmacao/'
             })
+        
         else:
             # Retorna erro se não houver usos
             return JsonResponse({
@@ -181,4 +182,6 @@ def validar_bilhete(request):
         
     except Exception as e:
         # Captura outros erros inesperados
+        
         return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+        

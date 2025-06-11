@@ -19,24 +19,43 @@
 {% endblock %}
 
 {% block extra_js %}
+<style>
+    #reader {
+        /* Força o contêiner a ser visível e ter um tamanho */
+        display: block !important;
+        width: 90% !important;
+        height: 40vh !important; /* 40% da altura da tela */
+        background-color: rgb(192, 192, 192);
+        margin: 20px auto;
+    }
+
+    /* Esta regra será aplicada ao <video> que a biblioteca criar DENTRO do #reader */
+    #reader video {
+        /* Força o vídeo a preencher o contêiner */
+        width: 100% !important;
+        height: 100% !important;
+        display: block !important;
+        object-fit: cover; 
+    }
+</style>
+
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // O seu código JavaScript permanece exatamente o mesmo, pois ele já está correto.
+    // ... (todo o seu script que já temos) ...
     console.log("DOM carregado. Script de scan inicializado.");
 
-    // Elementos do DOM
     const cameraButton = document.getElementById('cameraButton');
     const readerDiv = document.getElementById('reader');
     const scanResultDiv = document.getElementById('scan-result');
     const textBemVindo = document.getElementById('textBemVindo');
     const textoMeio = document.getElementById('textoMeio');
 
-    // Instância da biblioteca
     const html5QrCode = new Html5Qrcode("reader");
     let isScanning = false;
 
-    // --- FUNÇÕES DE CALLBACK ---
     const onScanSuccess = (decodedText, decodedResult) => {
         if (isScanning) {
             isScanning = false;
@@ -45,8 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 scanResultDiv.style.color = 'blue';
                 scanResultDiv.innerText = `Código "${decodedText}" lido. Validando...`;
                 
-                // A lógica de fetch para o backend permanece a mesma
-                fetch('/api/validar-bilhete/', {
+                fetch('/empresa/api/validar-bilhete/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -71,40 +89,33 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const onScanFailure = (error) => { /* Silencioso */ };
 
-    // --- LÓGICA DO BOTÃO ---
     cameraButton.addEventListener('click', () => {
         console.log("Botão 'ABRIR CÂMERA' clicado.");
         
-        // Esconde e mostra os elementos da UI
         readerDiv.style.display = 'block';
         cameraButton.style.display = 'none';
         textBemVindo.style.display = 'none';
         textoMeio.style.display = 'none';
         scanResultDiv.innerText = 'Iniciando câmera...';
 
-        // Configuração do scanner
         const config = { 
             fps: 10, 
             qrbox: { width: 250, height: 250 } 
         };
 
-        // LÓGICA INTELIGENTE PARA SELECIONAR A CÂMERA
         Html5Qrcode.getCameras().then(cameras => {
             if (cameras && cameras.length) {
                 let cameraId;
-                // Procura por uma câmera traseira (ideal para celular)
                 const rearCamera = cameras.find(camera => camera.label.toLowerCase().includes('back') || camera.label.toLowerCase().includes('traseira'));
                 
                 if (rearCamera) {
                     cameraId = rearCamera.id;
                     console.log(`Câmera traseira encontrada: ${rearCamera.label}`);
                 } else {
-                    // Se não encontrar, usa a primeira câmera da lista (ideal para desktop)
                     cameraId = cameras[0].id;
                     console.log(`Usando câmera padrão: ${cameras[0].label}`);
                 }
 
-                // Inicia o scanner com o ID da câmera selecionada
                 html5QrCode.start(
                     cameraId, 
                     config, 
@@ -138,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
 {% block middle-btn %} {% endblock %}
 
 <style>
-/* Seus estilos podem permanecer os mesmos */
+/* Seus estilos podem permanecer os mesmos, o bloco de debug acima irá sobrescrevê-los se necessário */
 .texto-card h1 {
     font-size: 50px;
     color: #0e0e0e;
