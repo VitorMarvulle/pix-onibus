@@ -7,7 +7,7 @@
   <div class="status-card-container">
     <div class="status-card success-card">
       <div class="status-text">Bilhete validado com sucesso!</div>
-      <div class="ticket-number">N. 0123</div>
+      <div class="ticket-number"></div>
     </div>
   </div>
   
@@ -159,22 +159,34 @@
     }
 </style>
 
+{% block extra_js %}
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Get URL parameters to determine which screen to show
+document.addEventListener('DOMContentLoaded', function() {
+    // Pega os parâmetros da URL para decidir o que mostrar
     const urlParams = new URLSearchParams(window.location.search);
     const status = urlParams.get('status');
-    const ticketNumber = urlParams.get('ticket') || '0123'; // Default ticket number
+    
+    // Pega o ID do bilhete da URL. Se não for passado, o valor será `null`.
+    const ticketNumber = urlParams.get('ticket'); 
     
     if (status === 'error') {
-      document.getElementById('successDisplay').style.display = 'none';
-      document.getElementById('errorDisplay').style.display = 'flex';
+        // Se a URL contiver '?status=error', mostra a tela de erro e esconde a de sucesso
+        document.getElementById('successDisplay').style.display = 'none';
+        document.getElementById('errorDisplay').style.display = 'flex';
     } else {
-      // Update ticket number in the DOM
-      document.querySelector('.ticket-number').textContent = 'N. ' + ticketNumber;
+        // Para qualquer outro caso (sucesso), mostra a tela de sucesso e esconde a de erro
+        document.getElementById('successDisplay').style.display = 'flex';
+        document.getElementById('errorDisplay').style.display = 'none';
+
+        // Somente se um 'ticket' foi passado na URL, preenche o número
+        if (ticketNumber) {
+            // Adicionando o 'N. ' para manter o formato que você tinha
+            document.querySelector('.ticket-number').textContent = 'cód: ' + ticketNumber;
+        }
     }
-  });
+});
 </script>
+{% endblock %}
 
 {% block middle-btn %}  {% endblock %}
 {% endblock %}
