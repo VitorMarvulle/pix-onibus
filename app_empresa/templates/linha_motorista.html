@@ -1,25 +1,20 @@
 {% extends 'base_page.html' %}
 
 {% block content %}
-<div class="texto-card" style="text-align: center;"> 
+<div class="texto-card"> 
     <h1>Escolha sua Linha:</h1>
 </div>
 
-<!-- Formulario Django -->
+<!-- Formulário Django -->
 <form method="post" id="linhaForm">
     {% csrf_token %}
-
-    <!-- Campo oculto que será preenchido com o valor da linha -->
     <input type="hidden" name="linha" id="linhaSelecionada">
 
-    <!-- Dropdown visual customizado -->
+    <!-- Dropdown customizado -->
     <div class="custom-dropdown-container">
-        <div class="custom-input-field">
-            <input type="text" id="linhaInput" placeholder="linha" readonly>
-            <div class="selected-value" id="selectedValue">></div>
-            <div class="dropdown-icon">
-                <img src="" alt="Open dropdown" id="dropdownIcon">
-            </div>
+        <div class="custom-input-field" id="dropdownTrigger">
+            <input type="text" id="linhaInput" placeholder="Selecione a linha" readonly>
+            <span class="dropdown-icon">&#9662;</span>
         </div>
 
         <div class="dropdown-options" id="dropdownOptions">
@@ -32,115 +27,99 @@
     <button type="submit" class="action-button">ENTRAR</button>
 </form>
 
+<!-- ESTILO -->
 <style>
     body {
         font-family: 'Poppins', sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
     }
-    
-    h1, p {
+
+    .texto-card h1 {
+        font-size: 36px;
+        color: #0e0e0e;
+        margin-top: 60px;
+        margin-bottom: 20px;
+        font-weight: 600;
         text-align: center;
     }
-    
+
     .custom-dropdown-container {
         width: 280px;
         max-width: 90%;
-        margin: 20px auto;
+        margin: 0 auto 30px auto;
         position: relative;
-    }
-
-        .texto-card h1 {
-        font-size: 50px;          /* Tamanho do título "Login" */
-        color: #0e0e0e;
-        margin-top: -20%;
-        margin-bottom: 5px;
-        font-weight: 600;
-    }
-    
-    .selected-value{
-    transform: rotate(90deg);
-    font-size: 50px;    
     }
 
     .custom-input-field {
-        padding: 1px;
         display: flex;
         align-items: center;
-        position: relative;
-        border-radius: 25px;
-        overflow: hidden;
-        background-color: #a1a1a1;
-        cursor: pointer;
-    }
-    
-    .custom-input-field input {
-        flex: 1;
-        border: 1px solid #8A2BE2;
-        border-bottom: none;
-        padding: 10px 15px;
-        font-size: 16px;
-        background-color: white;
-        cursor: pointer;
+        justify-content: space-between;
+        background-color: #fff;
+        border: 2px solid #8A2BE2;
         border-radius: 20px;
+        padding: 10px 15px;
+        cursor: pointer;
+        transition: border 0.3s ease;
+    }
+
+    .custom-input-field.selected {
+        border-color: #4FBFA5; /* verde ao selecionar */
+    }
+
+    .custom-input-field input {
+        border: none;
         outline: none;
-    }
-    
-    .selected-value {
-        /* background-color: #a0a0a0; */
-        color: #fff;
-        padding: 12px 15px;
+        background: transparent;
+        font-size: 16px;
         flex: 1;
-        text-align: left;
-        font-weight: 500;
-        font-size: 18px;
+        cursor: pointer;
     }
-    
+
     .dropdown-icon {
-        background-color: #a0a0a0;
-        padding: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        font-size: 18px;
+        color: #8A2BE2;
+        pointer-events: none;
+        margin-left: 10px;
     }
-    
-    .dropdown-icon img {
-        width: 20px;
-        height: 20px;
-        filter: brightness(0) invert(1);
-    }
-    
+
     .dropdown-options {
         position: absolute;
+        width: 100%;
         top: 100%;
         left: 0;
-        right: 0;
-        background-color: #e0e0e0;
-        border-radius: 0 0 8px 8px;
-        overflow: hidden;
-        z-index: 100;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-top: none;
+        border-radius: 0 0 10px 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        max-height: 200px;
+        overflow-y: auto;
         display: none;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        z-index: 10;
     }
-    
+
     .dropdown-options.show {
         display: block;
     }
-    
+
     .option {
-        padding: 12px 15px;
+        padding: 10px 12px;
         cursor: pointer;
-        transition: background-color 0.2s;
-        font-size: 16px;
+        font-size: 15px;
+        transition: background-color 0.2s ease;
     }
-    
+
     .option:hover {
-        background-color: #d0d0d0;
+        background-color: #f0f0f0;
     }
-    
+
     .action-button {
         display: block;
         width: 280px;
         max-width: 90%;
-        margin: 20px auto;
+        margin: 0 auto;
         padding: 12px;
         border: none;
         border-radius: 25px;
@@ -152,41 +131,47 @@
         text-transform: uppercase;
         letter-spacing: 1px;
     }
-    
+
     .action-button:hover {
-        background-color: #45a890;
+        background-color: #3ea28a;
     }
 </style>
 
+<!-- SCRIPT -->
 <script>
     const dropdownInput = document.getElementById('linhaInput');
     const dropdownOptions = document.getElementById('dropdownOptions');
     const options = dropdownOptions.querySelectorAll('.option');
-    const selectedValue = document.getElementById('selectedValue');
     const linhaSelecionada = document.getElementById('linhaSelecionada');
+    const dropdownTrigger = document.getElementById('dropdownTrigger');
 
-    dropdownInput.addEventListener('click', () => {
+    // Abre ou fecha o dropdown
+    dropdownTrigger.addEventListener('click', () => {
         dropdownOptions.classList.toggle('show');
     });
 
+    // Ao clicar em uma opção
     options.forEach(option => {
         option.addEventListener('click', () => {
             const value = option.getAttribute('data-value');
             const label = option.textContent;
 
             dropdownInput.value = label;
-            linhaSelecionada.value = value; // preenche campo hidden
+            linhaSelecionada.value = value;
             dropdownOptions.classList.remove('show');
+
+            // Destaca visualmente a seleção com borda verde
+            dropdownTrigger.classList.add('selected');
         });
     });
 
     // Fecha se clicar fora
     document.addEventListener('click', function(e) {
-        if (!dropdownInput.contains(e.target) && !dropdownOptions.contains(e.target)) {
+        if (!dropdownTrigger.contains(e.target) && !dropdownOptions.contains(e.target)) {
             dropdownOptions.classList.remove('show');
         }
     });
 </script>
-{% block middle-btn %}  {% endblock %}
-{% endblock %}
 
+{% block middle-btn %}{% endblock %}
+{% endblock %}
