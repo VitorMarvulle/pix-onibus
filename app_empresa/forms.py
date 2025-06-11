@@ -26,18 +26,18 @@ class FuncionarioForm(forms.ModelForm):
         
       return cpf
   
-class LoginForm(forms.ModelForm):
-   class Meta:
-    model = Funcionario
-    fields = ['codigo','email','senha']
-    widgets = {
-            'codigo': forms.TextInput(attrs={'class': 'login-input', 'placeholder': 'Código Motorista'}),
-            'email': forms.EmailInput(attrs={'class': 'login-input','placeholder': 'exemplo@email.com'}),
-            'senha': forms.PasswordInput(attrs={'class': 'login-input'})
-        }
-      
-
-
+class LoginForm(forms.Form):
+  login_opcao = forms.ChoiceField(
+     choices=[('codigo','Codigo'),('email','Email')],
+     widget=forms.Select(attrs={'class': 'login-select'}))
+  
+  identificador = forms.CharField(
+     widget=forms.TextInput(attrs={'class': 'login-input', 'placeholder':'Código ou Email'})
+  )
+  senha = forms.CharField(
+     widget=forms.TextInput(attrs={'class': 'login-input','placeholder':'Senha'})
+  )
+  
 class LinhaForm(forms.ModelForm):
   class Meta:
     model = Linha
@@ -59,6 +59,13 @@ class LinhaForm(forms.ModelForm):
              raise forms.ValidationError("Esta linha ja está cadastrada")
           
         return idLinha
+  
+class SelecionarLinhaForm(forms.Form):
+   linha = forms.ModelChoiceField(
+      queryset=Linha.objects.all(),
+      widget=forms.Select(attrs={'class': 'linha-select'}),
+      label='Selecione a linha'
+   )
 
     
 

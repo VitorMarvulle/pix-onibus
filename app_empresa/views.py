@@ -1,16 +1,40 @@
 from django.shortcuts import render, redirect
-from .forms import FuncionarioForm,LinhaForm
+from .forms import FuncionarioForm,LinhaForm,LoginForm,SelecionarLinhaForm
 from .models import Linha,Funcionario,Historico
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
 
 
 def login(request):
-    
-    return render(request, 'login.html', {
-        'previous_url': '/',
-        'next_url': '/empresa/dashboard/',
-    })
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            tipo = form.cleaned_data['login_opcao']
+            identificador = form.cleaned_data['identificador']
+            senha = form.cleaned_data['senha']
+
+
+            try:
+                if tipo =='codigo':
+                    funcionario = Funcionario.objects.get(codigo=identificador,senha = senha)
+                    request.session['funcionario_id'] = funcionario.idFuncionario
+                    messages.success(request,'Login de Motorista realizado com Sucesso!')
+                    return redirect('linha_motorista')
+                else:
+                    funcionario = Funcionario.objects.get(email=identificador,senha=senha)
+                    request.session['funcionario_id'] = funcionario.idFuncionario
+                    messages.success(request, 'Login de Administrador realizado com sucesso!')
+                    return redirect('dashboard')
+            except Funcionario.DoesNotExist:
+                messages.error(request, 'Usuário ou senha inválidos.')
+    else:
+        form = LoginForm()
+    context = {
+            'form':form,
+            'previous_url': '/',
+            'next_url': '/empresa/dashboard/'
+        }
+    return render(request, 'login.html', context)
 
 def dashboard(request):
     
@@ -122,16 +146,45 @@ def lista_motorista(request):
     return render(request, 'lista_motorista.html',context)
 
 def linha_motorista(request):
-    return render(request, 'linha_motorista.html', {
+    if 'funcionario_id' not in request.session:
+        return redirect('login')
+    
+    if request.method == 'POST':
+        form = SelecionarLinhaForm(request.POST)
+        if form.is_valid():
+            linha = form.cleaned_data['linha']
+            request.session['linha_id']= linha.idLinha
+            return redirect('home_motorista')
+        
+    else:
+        form = SelecionarLinhaForm()
+
+    context = {
+        'form':form,
         'previous_url': '/',
         'next_url': '/empresa/home_motorista/',
-    })
+    }
+
+    return render(request, 'linha_motorista.html', context)
     
 def home_motorista(request):
-    return render(request, 'home_motorista.html', {
+    funcionario_id = request.session.get('funcionario_id')
+    linha_id = request.session.get('linha_id')
+
+    if not funcionario_id or not linha_id:
+        return redirect('login')
+    
+    funcionario = Funcionario.objects.get(idFuncionario=funcionario_id)
+    linha = Linha.objects.get(idLinha=linha_id)
+
+    context = {
+        'funcionario':funcionario,
+        'linha': linha,
         'previous_url': '/empresa/linha_motorista/',
-        'next_url': '/login/',
-    })
+        'next_url': '/login/'
+
+    }
+    return render(request, 'home_motorista.html', context)
     
 def confirmacao(request):
     return render(request, 'confirmacao.html', {
