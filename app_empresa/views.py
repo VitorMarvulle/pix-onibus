@@ -210,12 +210,16 @@ def validar_bilhete(request):
         if passagem.usosDisponiveis > 0:
             passagem.usosDisponiveis -= 1  # Decrementa o número de usos
             passagem.save()
+
+            # --- MUDANÇA PRINCIPAL AQUI ---
+            # Construa a URL de sucesso com o ID da passagem como um parâmetro
+            redirect_url_success = f'/empresa/confirmacao/?ticket={passagem.idPassagem}'
             
             # Retorna sucesso com a URL para redirecionamento
             return JsonResponse({
                 'status': 'success',
                 'message': 'Bilhete validado com sucesso!',
-                'redirect_url': '/empresa/confirmacao/'
+                'redirect_url': redirect_url_success
             })
         
         else:

@@ -1,6 +1,5 @@
 {% extends 'base_page.html' %}
 
-
 {% block content %}
 <div class="texto-card" style="text-align: center; margin-bottom: 30px;"> 
     <h1>Login</h1>
@@ -10,13 +9,24 @@
 <div class="card-login"> 
     <form method="POST" action="#">
         {% csrf_token %}
+        
         <div class="form-group">
-            {{ form.login_opcao.label_tag }} {{ form.login_opcao }}
-            {{ form.identificador.label_tag }} {{ form.identificador }}
+            <div class="radio-group">
+                {% for radio in form.login_opcao %}
+                    <div class="radio-option">
+                        {{ radio.tag }}
+                        <label for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form.identificador }}
         </div>
         
         <div class="form-group">
-            {{ form.senha.label_tag}} {{ form.senha }}
+            {{ form.senha }}
         </div>
         
         <button type="submit" class="btn-login">ENTRAR</button>
@@ -24,21 +34,61 @@
 </div>
 
 <style>
-    /* Estilização para o card principal do formulário */
-    .card-login {
-        background-color: #ffffff; /* Fundo branco do card */
-        padding: 35px 30px;       /* Padding interno do card (ajustado para mais espaço vertical) */
-        border-radius: 25px;      /* Cantos arredondados do card */
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); /* Sombra sutil (ajustada) */
-        width: 100%;
-        max-width: 350px;         /* Largura máxima do card (ajustada para ser similar à imagem) */
-        box-sizing: border-box;   /* Garante que padding não aumente a largura total */
-        margin: 0 auto;           /* Centraliza o card se o container pai permitir */
+    /* Estilos para os Radio Buttons */
+    .radio-group {
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+        margin-bottom: 25px;
     }
 
-    /* Estilização para o texto introdutório (opcional, baseado no seu HTML) */
+    .radio-option {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .radio-option input[type="radio"] {
+        display: none;
+    }
+
+    .radio-option label::before {
+        content: '';
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        border: 2px solid #4FBBAF;
+        border-radius: 50%;
+        margin-right: 8px;
+        vertical-align: middle;
+        background-color: white;
+        transition: background-color 0.2s ease;
+    }
+
+    .radio-option input[type="radio"]:checked + label::before {
+        background-color: #4FBBAF;
+    }
+    
+    .radio-option label {
+        color: #333;
+        font-weight: 500;
+        vertical-align: middle;
+    }
+
+    /* Seus Estilos Originais */
+    .card-login {
+        background-color: #ffffff;
+        padding: 35px 30px;
+        border-radius: 25px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        width: 100%;
+        max-width: 350px;
+        box-sizing: border-box;
+        margin: 0 auto;
+    }
+
     .texto-card h1 {
-        font-size: 50px;          /* Tamanho do título "Login" */
+        font-size: 50px;
         color: #0e0e0e;
         margin-top: 0;
         margin-bottom: 5px;
@@ -46,75 +96,62 @@
     }
 
     .texto-card p {
-        font-size: 20px;          /* Tamanho do parágrafo de instrução */
-        color: #000000;              /* Cor do texto mais suave */
-        /* margin-bottom: 25px; Removido para usar o margin-bottom no próprio .texto-card via style no HTML */
+        font-size: 20px;
+        color: #000000;
     }
 
-    /* Estilização para os grupos de formulário (label + input) */
     .form-group {
-        margin-bottom: 20px;      /* Espaçamento entre os grupos de label/input */
+        margin-bottom: 20px;
         width: 100%;
     }
 
-    .form-group:last-of-type { /* Remove a margem inferior do último grupo antes do botão */
+    .form-group:last-of-type {
         margin-bottom: 25px;
     }
-
-    .form-group label {
-        display: block;           /* Faz o label ocupar a linha toda */
-        font-size: 13px;          /* Tamanho da fonte do label */
-        color: #808080;           /* Cor do label (cinza claro da imagem) */
-        margin-bottom: 8px;       /* Espaçamento abaixo do label */
-        padding-left: 18px;       /* Alinha o label com o texto do input (ajustado) */
-        text-align: left;         /* Alinhamento do label */
-    }
     
-    /* Estilização para os campos de input */
     .login-input {
         width: 100%;
-        padding: 15px 20px;       /* Padding interno do input (altura e espaço para o texto) */
-        border: none;             /* Remove a borda padrão */
-        border-radius: 50px;      /* Cantos bem arredondados (formato pílula) */
-        background-color: #f1f1f1; /* Cor de fundo do input (cinza bem claro da imagem) */
-        font-family: inherit;     /* Usa a fonte do corpo/pai */
-        font-size: 15px;          /* Tamanho da fonte do texto do input */
-        color: #333;              /* Cor do texto digitado */
-        text-align: left;         /* Alinhamento do texto e placeholder */
-        box-sizing: border-box;   /* Garante que padding não aumente a largura total */
-        line-height: normal;      /* Garante altura de linha padrão */
+        padding: 15px 20px;
+        border: none;
+        border-radius: 50px;
+        background-color: #f1f1f1;
+        font-family: inherit;
+        font-size: 15px;
+        color: #333;
+        text-align: left;
+        box-sizing: border-box;
+        line-height: normal;
     }
     
     .login-input::placeholder {
-        color: #505050;           /* Cor do placeholder (mais escura, como na imagem) */
-        text-align: left;         /* Alinhamento do placeholder */
+        color: #505050;
+        text-align: left;
     }
     
     .login-input:focus {
-        outline: none;            /* Remove o outline padrão ao focar */
-        background-color: #e9e9e9; /* Leve mudança de cor ao focar */
+        outline: none;
+        background-color: #e9e9e9;
     }
     
-    /* Estilização para o botão de login */
     .btn-login {
         width: 100%;
-        padding: 15px 20px;       /* Padding interno do botão */
+        padding: 15px 20px;
         border: none;
-        border-radius: 50px;      /* Cantos bem arredondados */
-        background-color: #4FBBAF; /* Cor verde-azulada do botão (ajuste fino da cor) */
-        color: white;             /* Cor do texto do botão */
+        border-radius: 50px;
+        background-color: #4FBBAF;
+        color: white;
         font-family: inherit;
-        font-size: 15px;          /* Tamanho da fonte do botão */
+        font-size: 15px;
         font-weight: bold;
-        text-transform: uppercase; /* Texto em maiúsculas */
-        letter-spacing: 0.5px;    /* Pequeno espaçamento entre letras */
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
         cursor: pointer;
         transition: background-color 0.2s ease-in-out;
-        margin-top: 10px;         /* Espaçamento acima do botão */
+        margin-top: 10px;
     }
     
     .btn-login:hover {
-        background-color: #339186; /* Cor do botão no hover (um pouco mais escura) */
+        background-color: #339186;
     }
 </style>
 
