@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'style-pages.css' %}">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-    <title>Pix Onibus</title>
+    <link id="favicon" rel="icon" type="image/png" href="{% static 'assets/logo.png' %}">
+    <title>OniPIX</title>
 </head>
 <body>
     {% include 'mensagem.html' %}
@@ -27,7 +28,6 @@
         {% endblock %}
         
         <!-- Center card -->
-         
         <div class="card" data-aos="flip-right">
             {% block content %}{% endblock %}
         </div>
