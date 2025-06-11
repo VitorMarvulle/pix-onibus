@@ -37,6 +37,16 @@
         display: block !important;
         object-fit: cover; 
     }
+
+    .action-button{
+        border-color: white;
+        padding: 10px 40px;
+        border-radius: 20px;
+        font-family: "Poppins", sans-serif;
+        background-color: #36a89d; /* Verde-azulado do botão SAIR */
+        color: white;
+        font-size: 15px;
+    }
 </style>
 
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
@@ -147,36 +157,3 @@ document.addEventListener('DOMContentLoaded', function() {
 {% endblock %}
 
 {% block middle-btn %} {% endblock %}
-
-<style>
-/* Seus estilos podem permanecer os mesmos, o bloco de debug acima irá sobrescrevê-los se necessário */
-.texto-card h1 {
-    font-size: 50px;
-    color: #0e0e0e;
-    margin-top: -30%;
-    font-weight: 600;
-}
-.texto-card-middle h1 {
-    position: relative;
-    margin-top: 80px;
-    font-size: 30px;
-    color: #0e0e0e;
-    font-weight: 600;
-}
-.action-button {
-    display: block;
-    width: 280px;
-    max-width: 90%;
-    margin: 20px auto;
-    padding: 12px;
-    border: none;
-    border-radius: 25px;
-    background-color: #4FBFA5;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-</style>

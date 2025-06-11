@@ -129,7 +129,7 @@ def linha_motorista(request):
     
 def home_motorista(request):
     return render(request, 'home_motorista.html', {
-        'previous_url': '/empresa/linha_motorista/',
+        'previous_url': '/empresa/home_motorista/',
         'next_url': '/login/',
     })
     

@@ -8,7 +8,7 @@
 <br>
 
     <div class="ticket" id="ticket-container">
-        <p class="date">{{ date }}</p>
+        <p class="date">{{ date|date:"d/m/Y - H:i" }}</p>
         <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code" />
         <p class="title">PASSAGEM MUNICIPAL</p>
         <p class="price">R$ 5,25</p>
