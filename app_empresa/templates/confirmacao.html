@@ -8,14 +8,15 @@
     <div class="status-card success-card">
       <div class="status-text">Bilhete validado com sucesso!</div>
       <div class="ticket-number">N. 0123</div>
+      <div class="usos-restantes">Usos restantes: <span id="usosRestantes">--</span></div>
     </div>
   </div>
-  
+
   <!-- Middle Message -->
   <div class="result-message">
     <h1>Catraca liberada!</h1>
   </div>
-  
+
   <!-- Bottom Button -->
   <div class="button-container">
     <a href="{{ previous_url }}" class="action-button success-button">VOLTAR</a>
@@ -30,12 +31,12 @@
       <div class="status-text">Falha ao validar bilhete.</div>
     </div>
   </div>
-  
+
   <!-- Middle Message -->
   <div class="result-message">
     <h1>Desculpe, ocorreu um erro :(</h1>
   </div>
-  
+
   <!-- Bottom Button -->
   <div class="button-container">
     <a href="{{ previous_url }}" class="action-button error-button">VOLTAR</a>
@@ -43,129 +44,147 @@
 </div>
 
 <style>
-    body {
-        font-family: 'Poppins', sans-serif;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        height: 100%;
-    }
-    
-    /* Result Screen Layouts */
-    .result-screen {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between; /* This ensures proper spacing */
-        box-sizing: border-box;
-        padding: 60px 20px 40px 20px;
-    }
-    
-    .success-screen {
-        background-color: #3AE57F; /* Green background for success */
-    }
-    
-    .error-screen {
-        background-color: #FF5252; /* Red background for error */
-    }
-    
-    /* Status Card Styling */
-    .status-card-container {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        padding-top: 80px;
-    }
-    
-    .status-card {
-        background-color: #FFFFFF;
-        padding: 12px 20px;
-        border-radius: 4px;
-        text-align: center;
-        width: 90%;
-        max-width: 320px;
-    }
-    
-    .success-card {
-        box-shadow: 8px 8px 0px #3498db; /* Blue shadow for success */
-    }
-    
-    .error-card {
-        box-shadow: 8px 8px 0px #f1c40f; /* Yellow shadow for error */
-    }
-    
-    .status-text {
-        font-size: 25px;
-        font-weight: 500;
-    }
-    
-    .ticket-number {
-        font-size: 40px;
-        margin-top: 5px;
-        font-weight: bold;
-    }
-    
-    /* Message Styling */
-    .result-message {
-        flex-grow: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-    }
-    
-    .result-message h1 {
-        font-size: 60px;
-        font-weight: 700;
-        color: #000000;
-    }
-    
-    /* Button Container - Positioned at Bottom */
-    .button-container {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        padding-bottom: 60px; /* Extra space at bottom */
-    }
-    
-    /* Button Styling */
-    .action-button {
-        display: block;
-        width: 280px;
-        max-width: 90%;
-        padding: 12px;
-        border: none;
-        border-radius: 25px;
-        color: white;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        text-align: center;
-        text-decoration: none;
-    }
-    
-    .success-button {
-        background-color: #3498db; /* Grey button for success */
-    }
-    
-    .error-button {
-        background-color: #f1c40f; /* Teal button for error */
-    }
+  body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100%;
+  }
+
+  /* Result Screen Layouts */
+  .result-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* This ensures proper spacing */
+    box-sizing: border-box;
+    padding: 60px 20px 40px 20px;
+  }
+
+  .success-screen {
+    background-color: #3AE57F;
+    /* Green background for success */
+  }
+
+  .error-screen {
+    background-color: #FF5252;
+    /* Red background for error */
+  }
+
+  /* Status Card Styling */
+  .status-card-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 80px;
+  }
+
+  .status-card {
+    background-color: #FFFFFF;
+    padding: 12px 20px;
+    border-radius: 4px;
+    text-align: center;
+    width: 90%;
+    max-width: 320px;
+  }
+
+  .success-card {
+    box-shadow: 8px 8px 0px #3498db;
+    /* Blue shadow for success */
+  }
+
+  .error-card {
+    box-shadow: 8px 8px 0px #f1c40f;
+    /* Yellow shadow for error */
+  }
+
+  .status-text {
+    font-size: 25px;
+    font-weight: 500;
+  }
+
+  .ticket-number {
+    font-size: 40px;
+    margin-top: 5px;
+    font-weight: bold;
+  }
+
+  /* Message Styling */
+  .result-message {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .result-message h1 {
+    font-size: 60px;
+    font-weight: 700;
+    color: #000000;
+  }
+
+  /* Button Container - Positioned at Bottom */
+  .button-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 60px;
+    /* Extra space at bottom */
+  }
+
+  /* Button Styling */
+  .action-button {
+    display: block;
+    width: 280px;
+    max-width: 90%;
+    padding: 12px;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .success-button {
+    background-color: #3498db;
+    /* Grey button for success */
+  }
+
+  .error-button {
+    background-color: #f1c40f;
+    /* Teal button for error */
+  }
+
+  .usos-restantes {
+    font-size: 22px;
+    margin-top: 10px;
+    font-weight: 400;
+    color: #000;
+    text-align: center;
+}
+
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     // Get URL parameters to determine which screen to show
     const urlParams = new URLSearchParams(window.location.search);
     const status = urlParams.get('status');
     const ticketNumber = urlParams.get('ticket') || '0123'; // Default ticket number
-    
+    const usos = urlParams.get('usos');
+
     if (status === 'error') {
       document.getElementById('successDisplay').style.display = 'none';
       document.getElementById('errorDisplay').style.display = 'flex';
@@ -174,7 +193,11 @@
       document.querySelector('.ticket-number').textContent = 'N. ' + ticketNumber;
     }
   });
+  
+  if (usos !== null) {
+    document.getElementById('usosRestantes').textContent = usos;
+  }
 </script>
 
-{% block middle-btn %}  {% endblock %}
+{% block middle-btn %} {% endblock %}
 {% endblock %}

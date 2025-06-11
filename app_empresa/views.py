@@ -205,17 +205,35 @@ def validar_bilhete(request):
 
         # Busca o bilhete no banco de dados
         passagem = Passagem.objects.get(idPassagem=ticket_id)
-
+        usuario_id = passagem.usuario_id
+        idPassagem = passagem.id
         # Verifica se ainda há usos disponíveis
         if passagem.usosDisponiveis > 0:
             passagem.usosDisponiveis -= 1  # Decrementa o número de usos
             passagem.save()
+
+            #  INSERÇÃO NO HISTÓRICO AQUI 
+            funcionario_id = request.session.get('funcionario_id')
+            linha_id = request.session.get('linha_id')
+
+            if funcionario_id and linha_id:
+                funcionario = Funcionario.objects.get(idFuncionario=funcionario_id)
+                linha = Linha.objects.get(idLinha=linha_id)
+
+                Historico.objects.create(
+                    usuario_id=usuario_id,
+                    passagem_id=idPassagem,
+                    funcionario_id=funcionario.idFuncionario,
+                    linha_id=linha.idLinha 
+                )
+            else:
+                print("Erro: ID do funcionário ou da linha não encontrado na sessão.")
             
             # Retorna sucesso com a URL para redirecionamento
             return JsonResponse({
                 'status': 'success',
                 'message': 'Bilhete validado com sucesso!',
-                'redirect_url': '/empresa/confirmacao/'
+                'redirect_url': f'/empresa/confirmacao/?ticket={ticket_id}&usos={passagem.usosDisponiveis}'
             })
         
         else:
