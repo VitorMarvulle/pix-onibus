@@ -228,12 +228,16 @@ def validar_bilhete(request):
                 )
             else:
                 print("Erro: ID do funcionário ou da linha não encontrado na sessão.")
+
+            # --- MUDANÇA PRINCIPAL AQUI ---
+            # Construa a URL de sucesso com o ID da passagem como um parâmetro
+            redirect_url_success = f'/empresa/confirmacao/?ticket={passagem.idPassagem}'
             
             # Retorna sucesso com a URL para redirecionamento
             return JsonResponse({
                 'status': 'success',
                 'message': 'Bilhete validado com sucesso!',
-                'redirect_url': f'/empresa/confirmacao/?ticket={ticket_id}&usos={passagem.usosDisponiveis}'
+                'redirect_url': redirect_url_success
             })
         
         else:

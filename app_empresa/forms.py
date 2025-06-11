@@ -29,13 +29,15 @@ class FuncionarioForm(forms.ModelForm):
 class LoginForm(forms.Form):
   login_opcao = forms.ChoiceField(
      choices=[('codigo','Codigo'),('email','Email')],
-     widget=forms.Select(attrs={'class': 'login-select'}))
+      widget=forms.RadioSelect,
+      initial='codigo' 
+  )
   
   identificador = forms.CharField(
      widget=forms.TextInput(attrs={'class': 'login-input', 'placeholder':'Código ou Email'})
   )
   senha = forms.CharField(
-     widget=forms.TextInput(attrs={'class': 'login-input','placeholder':'Senha'})
+     widget=forms.PasswordInput(attrs={'class': 'login-input','placeholder':'Senha'})
   )
   
 class LinhaForm(forms.ModelForm):
